@@ -25,6 +25,7 @@ var connected = false;
 exports.connect = function(url, callback){
     MongoClient.connect(url, function(err, _db){
         if (err) { throw new Error('Could not connect: '+err); }
+        console.log("Succesfully connected to the DB");
         db = _db;
         connected = true;
         console.log(connected +" is connected?");

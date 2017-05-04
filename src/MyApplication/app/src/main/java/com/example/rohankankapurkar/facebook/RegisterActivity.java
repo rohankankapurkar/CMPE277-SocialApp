@@ -1,6 +1,7 @@
 package com.example.rohankankapurkar.facebook;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -105,6 +106,11 @@ public class RegisterActivity extends AppCompatActivity {
 
                             Toast toast = Toast.makeText(context, text, duration);
                             toast.show();
+//adding code to navigate to confirm mail request.
+                            Intent confirmMailIntent = new Intent(RegisterActivity.this,ConfirmMailActivity.class);
+                            String send_email = register_email.getText().toString();
+                            confirmMailIntent.putExtra("email",send_email);
+                            RegisterActivity.this.startActivity(confirmMailIntent);
 
                         }
                     },

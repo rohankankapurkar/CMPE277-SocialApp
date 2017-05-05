@@ -415,6 +415,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
             Intent intent = new Intent(LoginActivity.this, Home.class);
+            intent.putExtra("email", mEmailView.getText().toString());
             startActivity(intent);
             finish();
 //            if (success) {

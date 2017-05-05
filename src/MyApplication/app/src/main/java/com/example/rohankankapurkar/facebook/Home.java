@@ -63,8 +63,7 @@ public class Home extends AppCompatActivity
 
     private void getUserDetails()
     {
-        System.out.println("***************************");
-        mAuthTask = new UserProfile("abc.gmail.com");
+        mAuthTask = new UserProfile();
         mAuthTask.execute((Void) null);
     }
 
@@ -130,21 +129,15 @@ public class Home extends AppCompatActivity
      */
     public class UserProfile extends AsyncTask<Void, Void, Boolean> {
 
-        private final String mEmail;
-        private final String mPassword;
 
-        UserProfile(String email) {
-            mEmail = email;
-            mPassword = "abc";
-        }
 
         @Override
         protected Boolean doInBackground(Void... params) {
 
 
             RequestQueue queue = Volley.newRequestQueue(mainContext);  // this = context
-            String url = "http://10.0.2.2:3000/getUserData?username=abc@gmail.com";
-            System.out.print("INN REQUEST");
+            String username= getIntent().getExtras().getString("email");
+            String url = String.format("http://10.0.2.2:3000/getUserData?username=%1$s",username);
             StringRequest postRequest = new StringRequest(Request.Method.GET, url,
                     new Response.Listener<String>() {
                         @Override
@@ -170,17 +163,7 @@ public class Home extends AppCompatActivity
                             Log.d("Error.Response", error.toString());
                         }
                     }
-            ) {
-                @Override
-                protected Map<String, String> getParams() {
-                    Map<String, String> params = new HashMap<String, String>();
-                    params.put("username", "abc@gmail.com");
-
-                    params.put("test", "testing");
-
-                    return params;
-                }
-            };
+            );
             queue.add(postRequest);
             return true;
         }

@@ -32,10 +32,12 @@ public class RegisterActivity extends AppCompatActivity {
 
     private  UserRegisterTask userRegisterTask = null;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register2);
         Context registerContext = this;
+
 
        // TextView rg_welcome = (TextView)findViewById(R.id.register_heading);
         register_email = (EditText) findViewById(R.id.register_email);

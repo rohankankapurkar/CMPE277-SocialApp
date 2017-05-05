@@ -414,7 +414,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
             showProgress(false);
-
+            Intent intent = new Intent(LoginActivity.this, Home.class);
+            startActivity(intent);
+            finish();
 //            if (success) {
 //                //finish();
 //            } else {

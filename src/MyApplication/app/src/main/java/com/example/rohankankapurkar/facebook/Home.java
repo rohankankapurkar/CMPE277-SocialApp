@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -24,6 +25,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,7 +36,6 @@ public class Home extends AppCompatActivity
 
     Context mainContext = this;
     private UserProfile mAuthTask = null;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,8 @@ public class Home extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
     }
 
     private void getUserDetails()
@@ -127,8 +132,9 @@ public class Home extends AppCompatActivity
      * Represents an asynchronous get user data information
      * the user.
      */
-    public class UserProfile extends AsyncTask<Void, Void, Boolean> {
-
+    public class UserProfile extends AsyncTask<Void, Void, Boolean>
+    {
+ public  JSONObject userDetails;
 
 
         @Override
@@ -145,7 +151,20 @@ public class Home extends AppCompatActivity
                             // response
                             Log.d("Response", response);
                             Log.d("res ", response.toString());
-                            System.out.print("INN RESPONSE");
+                            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+                            TextView username = (TextView) navigationView.getHeaderView(0).findViewById(R.id.username);
+                            TextView userEmail = (TextView) navigationView.getHeaderView(0).findViewById(R.id.userEmail);
+
+                            try {
+                                 userDetails = new JSONObject(response);
+                                 username.setText(userDetails.getString("firstname"));
+                                userEmail.setText(userDetails.getString("email"));
+                            }
+                            catch (JSONException e)
+                            {
+                                e.printStackTrace();
+                            }
+
 
                             Context context = getApplicationContext();
                             CharSequence text = "Welcome" + response.toString();

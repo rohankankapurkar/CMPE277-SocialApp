@@ -16,7 +16,7 @@ function getUserData(req ,res)
 
         coll.findOne({"email" : username}, function(err, user){
             if (user) {
-                 res.json({msg: user});
+                 res.json(user);
                 console.log("***************",user);
 
             } else {

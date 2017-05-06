@@ -1,6 +1,7 @@
 package com.example.rohankankapurkar.facebook;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -137,7 +138,7 @@ public class Home extends AppCompatActivity
     {
  public  JSONObject userDetails;
 
-
+        String firstname, lastname;
         @Override
         protected Boolean doInBackground(Void... params) {
 
@@ -164,13 +165,18 @@ public class Home extends AppCompatActivity
                             toast.show();
                             try {
                                  userDetails = new JSONObject(response);
-                                 username.setText(userDetails.getString("firstname"));
+                                 firstname = userDetails.getString("firstname");
+
+                                lastname = userDetails.getString("lastname");
+                                username.setText(firstname);
                                 userEmail.setText(userDetails.getString("email"));
                                 button.setOnClickListener(new View.OnClickListener() {
                                     public void onClick(View v)
                                     {
-                                        Toast toast = Toast.makeText(context, "button clicked", Toast.LENGTH_SHORT);
-                                        toast.show();       }
+                                        Intent userProfile = new Intent(Home.this,UserProfileActivity.class);
+                                        userProfile.putExtra("firstname",firstname+" "+lastname);
+                                        Home.this.startActivity(userProfile);
+                                    }
                                 });
 
 

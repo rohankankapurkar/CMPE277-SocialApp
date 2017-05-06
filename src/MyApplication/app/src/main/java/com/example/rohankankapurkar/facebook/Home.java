@@ -99,7 +99,10 @@ public class Home extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.logout) {
+            Intent logout = new Intent(Home.this,LoginActivity.class);
+            Home.this.startActivity(logout);
+
             return true;
         }
 

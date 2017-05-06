@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -154,11 +155,29 @@ public class Home extends AppCompatActivity
                             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
                             TextView username = (TextView) navigationView.getHeaderView(0).findViewById(R.id.username);
                             TextView userEmail = (TextView) navigationView.getHeaderView(0).findViewById(R.id.userEmail);
+                            Button button = (Button) navigationView.getHeaderView(0).findViewById(R.id.editProfile);
+                            final Context context = getApplicationContext();
+                            CharSequence text = "Welcome" + response.toString();
+                            int duration = Toast.LENGTH_SHORT;
 
+                            Toast toast = Toast.makeText(context, text, duration);
+                            toast.show();
                             try {
                                  userDetails = new JSONObject(response);
                                  username.setText(userDetails.getString("firstname"));
                                 userEmail.setText(userDetails.getString("email"));
+                                button.setOnClickListener(new View.OnClickListener() {
+                                    public void onClick(View v)
+                                    {
+                                        Toast toast = Toast.makeText(context, "button clicked", Toast.LENGTH_SHORT);
+                                        toast.show();       }
+                                });
+
+
+
+
+
+
                             }
                             catch (JSONException e)
                             {
@@ -166,12 +185,7 @@ public class Home extends AppCompatActivity
                             }
 
 
-                            Context context = getApplicationContext();
-                            CharSequence text = "Welcome" + response.toString();
-                            int duration = Toast.LENGTH_SHORT;
 
-                            Toast toast = Toast.makeText(context, text, duration);
-                            toast.show();
 
                         }
                     },

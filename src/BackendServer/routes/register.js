@@ -35,7 +35,7 @@ function register(req ,res){
         var val = Math.floor(1000 + Math.random() * 9000);
         console.log(val);
 
-        coll.insert({"email" : email, "password": password, "firstname" : firstname, "lastname" : lastname, "password_confirm": password_confirm, "verification" : val}, function(err, user){
+        coll.insert({email : email, "password": password, "firstname" : firstname, "lastname" : lastname, "password_confirm": password_confirm, "verification" : val}, function(err, user){
             if (user) {
                 //logic to send mail here
                 var mailer = require("nodemailer");

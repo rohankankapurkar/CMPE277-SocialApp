@@ -102,13 +102,15 @@ public class RegisterActivity extends AppCompatActivity {
                             Log.d("res ", response.toString());
 
 
+
                             Context context = getApplicationContext();
                             CharSequence text = "user added successfully"+ response.toString();
                             int duration = Toast.LENGTH_SHORT;
 
                             Toast toast = Toast.makeText(context, text, duration);
                             toast.show();
-//adding code to navigate to confirm mail request.
+                            //adding code to navigate to confirm mail request.
+
                             Intent confirmMailIntent = new Intent(RegisterActivity.this,ConfirmMailActivity.class);
                             String send_email = register_email.getText().toString();
                             confirmMailIntent.putExtra("email",send_email);

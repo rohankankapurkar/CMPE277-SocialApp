@@ -9,7 +9,7 @@ var mongoURL = "mongodb://rohan:rohan@cluster0-shard-00-00-v6jmi.mongodb.net:270
 function getUserData(req ,res)
 {
 
-   console.log(req.query.username);
+   console.log("********IN USERDATAT:",req.query.username);
     var username = req.query.username;
     mongo.connect(mongoURL, function(err, db){
         var coll = mongo.collection('Facebook');

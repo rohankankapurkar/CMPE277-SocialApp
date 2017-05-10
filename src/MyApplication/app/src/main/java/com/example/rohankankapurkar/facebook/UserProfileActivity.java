@@ -37,6 +37,9 @@ public class UserProfileActivity extends AppCompatActivity {
     ProgressDialog pd;
     Button chooseImg;
     ImageView imgView;
+    TextView name, email, profession, address, interest, about;
+    EditText newname, newemail, newprofession, newaddress, newinterest, newabout;
+    Button updateProfile;
     //creating reference to firebase storage
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReferenceFromUrl("gs://myapplication-574b6.appspot.com");
@@ -50,24 +53,41 @@ public class UserProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_profile);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        chooseImg = (Button)findViewById(R.id.uploadImg);
+
+        loadTextDetails();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.edit);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                name.setVisibility(View.GONE);
+                newname.setVisibility(View.VISIBLE);
+
+                email.setVisibility(View.GONE);
+                newemail.setVisibility(View.VISIBLE);
+
+                address.setVisibility(View.GONE);
+                newaddress.setVisibility(View.VISIBLE);
+
+                profession.setVisibility(View.GONE);
+                newprofession.setVisibility(View.VISIBLE);
+
+                interest.setVisibility(View.GONE);
+                newinterest.setVisibility(View.VISIBLE);
+
+                about.setVisibility(View.GONE);
+                newabout.setVisibility(View.VISIBLE);
+
+                updateProfile =(Button) findViewById(R.id.updateProfile);
+                updateProfile.setVisibility(View.VISIBLE);
+
+                chooseImg.setVisibility(View.VISIBLE);
+
+
+
             }
         });
-        String firstname = getIntent().getStringExtra("firstname");
-
-        TextView userEmail = (TextView) findViewById(R.id.firstname);
-        TextView name = (TextView) findViewById(R.id.userNameText);
-        TextView email = (TextView) findViewById(R.id.userEmailText);
-
-        userEmail.setText(firstname);
-        name.setText(firstname);
-        email.setText(getIntent().getStringExtra("email"));
 
 
         ActivityCompat.requestPermissions(this,
@@ -77,6 +97,52 @@ public class UserProfileActivity extends AppCompatActivity {
 
 
 
+
+
+    }
+
+    private void loadTextDetails()
+    {
+        String nameVal = getIntent().getStringExtra("firstname");
+        String emailVal = getIntent().getStringExtra("email");
+        String professionVal = getIntent().getStringExtra("profession");
+        String interestVal = getIntent().getStringExtra("interest");
+        String addressVal = getIntent().getStringExtra("address");
+        String aboutVal = getIntent().getStringExtra("aboutme");
+
+
+        TextView userEmail = (TextView) findViewById(R.id.firstname);
+        userEmail.setText(nameVal);
+
+        name = (TextView) findViewById(R.id.userNameText);
+        email = (TextView) findViewById(R.id.userEmailText);
+        address = (TextView) findViewById(R.id.userAddressText);
+        profession = (TextView) findViewById(R.id.userProfessionText);
+        interest = (TextView) findViewById(R.id.userInterestsText);
+        about = (TextView) findViewById(R.id.userAboutMeText);
+
+
+        name.setText(nameVal);
+        email.setText(emailVal);
+        address.setText(addressVal);
+        profession.setText(professionVal);
+        interest.setText(interestVal);
+        about.setText(aboutVal);
+
+
+        newname = (EditText) findViewById(R.id.userName);
+        newemail = (EditText) findViewById(R.id.userEmail);
+        newaddress = (EditText) findViewById(R.id.userAddress);
+        newprofession = (EditText) findViewById(R.id.userProfession);
+        newinterest = (EditText) findViewById(R.id.userInterests);
+        newabout = (EditText) findViewById(R.id.userAboutMe);
+
+        newname.setText(nameVal);
+        newemail.setText(emailVal);
+        newaddress.setText(addressVal);
+        newprofession.setText(professionVal);
+        newinterest.setText(interestVal);
+        newabout.setText(aboutVal);
 
 
     }
@@ -114,7 +180,6 @@ public class UserProfileActivity extends AppCompatActivity {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                    chooseImg = (Button)findViewById(R.id.uploadImg);
                     imgView = (ImageView)findViewById(R.id.profileImage);
 
                     pd = new ProgressDialog(this);

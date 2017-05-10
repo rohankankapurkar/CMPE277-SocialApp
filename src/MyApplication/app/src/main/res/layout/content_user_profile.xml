@@ -12,7 +12,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="350dp"
             android:layout_marginTop="30dp">
 
 
@@ -22,10 +22,9 @@
                 android:layout_margin="10dp"
                 android:id="@+id/profileIcon"
                 android:src="@drawable/profile"/>
-
             <TextView
                 android:id="@+id/userNameText"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/profileIcon"
                 android:layout_marginLeft="20dp"
@@ -34,7 +33,24 @@
                 android:text="User Name"
                 android:textColor="@color/colorPrimary"
                 android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_alignParentEnd="true" />
+            <EditText
+                android:id="@+id/userName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/profileIcon"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/profileIcon"
+                android:visibility="gone"
+                android:text="User Name"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp"
                 android:textStyle="bold" />
+
+
+
+
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -44,7 +60,7 @@
                 android:src="@drawable/email"/>
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:id="@+id/userEmailText"
                 android:text="demoemail@example.com"
                 android:textStyle="bold"
@@ -53,7 +69,24 @@
                 android:layout_marginLeft="20dp"
                 android:layout_alignTop="@+id/emailIcon"
                 android:layout_below="@+id/userNameText"
-                android:layout_toRightOf="@+id/emailIcon"/>
+                android:layout_toRightOf="@+id/emailIcon"
+                android:layout_alignEnd="@+id/userAddressText" />
+            <EditText
+                android:id="@+id/userEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/emailIcon"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/emailIcon"
+                android:text="User Email"
+                android:visibility="gone"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_alignEnd="@+id/userAddressText" />
+
+
+
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -63,7 +96,7 @@
                 android:src="@drawable/address"/>
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:id="@+id/userAddressText"
                 android:text="Demo Address"
                 android:textStyle="bold"
@@ -72,7 +105,23 @@
                 android:layout_marginLeft="20dp"
                 android:layout_alignTop="@+id/addressIcon"
                 android:layout_below="@+id/userEmailText"
-                android:layout_toRightOf="@+id/addressIcon"/>
+                android:layout_toRightOf="@+id/addressIcon"
+                android:layout_alignEnd="@+id/userProfessionText" />
+            <EditText
+                android:id="@+id/userAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/addressIcon"
+                android:visibility="gone"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/addressIcon"
+                android:text="User Name"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_alignEnd="@+id/userProfessionText" />
+
+
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -81,7 +130,7 @@
                 android:layout_below="@+id/addressIcon"
                 android:src="@drawable/profession"/>
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/userProfessionText"
                 android:text="Profession (e.g: Developer)"
@@ -91,7 +140,19 @@
                 android:layout_marginLeft="20dp"
                 android:layout_alignTop="@+id/professionIcon"
                 android:layout_below="@+id/userEmailText"
-                android:layout_toRightOf="@+id/professionIcon"/>
+                android:layout_toRightOf="@+id/professionIcon" />
+            <EditText
+                android:id="@+id/userProfession"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/professionIcon"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/professionIcon"
+                android:visibility="gone"
+                android:text="User Name"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <ImageView
                 android:layout_width="30dp"
@@ -101,7 +162,7 @@
                 android:layout_below="@+id/professionIcon"
                 android:src="@drawable/interest"/>
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/userInterestsText"
                 android:text="Interest (e.g: Travelling)"
@@ -111,7 +172,21 @@
                 android:layout_marginLeft="20dp"
                 android:layout_alignTop="@+id/interestIcon"
                 android:layout_below="@+id/userEmailText"
-                android:layout_toRightOf="@+id/interestIcon"/>
+                android:layout_toRightOf="@+id/interestIcon"
+                android:layout_alignEnd="@+id/userProfessionText" />
+            <EditText
+                android:id="@+id/userInterests"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/interestIcon"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/interestIcon"
+                android:visibility="gone"
+                android:text="User Name"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
 
             <ImageView
                 android:layout_width="30dp"
@@ -121,7 +196,7 @@
                 android:layout_below="@+id/interestIcon"
                 android:src="@drawable/aboutme"/>
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/userAboutMeText"
                 android:text="Describe yourself....."
@@ -131,8 +206,32 @@
                 android:layout_marginLeft="20dp"
                 android:layout_alignTop="@+id/aboutmeIcon"
                 android:layout_below="@+id/userEmailText"
-                android:layout_toRightOf="@+id/aboutmeIcon"/>
+                android:layout_toRightOf="@+id/aboutmeIcon"
+                android:layout_alignEnd="@+id/userInterestsText" />
+            <EditText
+                android:id="@+id/userAboutMe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/aboutmeIcon"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/aboutmeIcon"
+                android:visibility="gone"
+                android:text="User Name"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
+            <Button
+                android:id="@+id/updateProfile"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="20dp"
+                android:text="Save"
+                android:visibility="gone"
+                android:textColor="@color/white"
+                android:background="@color/colorPrimary"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true" />
 
 
         </RelativeLayout>

@@ -180,6 +180,12 @@ public class Home extends AppCompatActivity
                                         Intent userProfile = new Intent(Home.this,UserProfileActivity.class);
                                         userProfile.putExtra("firstname",firstname+" "+lastname);
                                         userProfile.putExtra("email",email);
+                                        userProfile.putExtra("address","101 E San Fernando St");
+                                        userProfile.putExtra("profession","Software Developer");
+                                        userProfile.putExtra("interest","Travelling");
+                                        userProfile.putExtra("aboutme","Want to travel the whole world");
+
+
                                         Home.this.startActivity(userProfile);
                                     }
                                 });

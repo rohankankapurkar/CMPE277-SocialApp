@@ -43,6 +43,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -352,6 +353,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         private final String mEmail;
         private final String mPassword;
+        public JSONObject res;
 
         UserLoginTask(String email, String password) {
             mEmail = email;
@@ -361,7 +363,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected Boolean doInBackground(Void... params) {
 
-
             RequestQueue queue = Volley.newRequestQueue(mainContext);  // this = context
             String url = "http://10.0.2.2:3000/login";
             StringRequest postRequest = new StringRequest(Request.Method.POST, url,
@@ -370,16 +371,42 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         @Override
                         public void onResponse(String response) {
                             // response
-                            Log.d("Response", response);
-                            Log.d("res ", response.toString());
+                            Log.d("Login Response", response);
+                            Log.d("Login res ", response.toString());
+
+                            try {
+                                 res = new JSONObject(response);
+                                if(res.getInt("status")== 200 )
+                                {
+                                    Context context = getApplicationContext();
+                                    CharSequence text = "Welcome"+ response.toString();
+                                    int duration = Toast.LENGTH_SHORT;
+
+                                    Toast toast = Toast.makeText(context, text, duration);
+                                    toast.show();
+
+                                    Intent intent = new Intent(LoginActivity.this, Home.class);
+                                    intent.putExtra("email", mEmailView.getText().toString());
+                                    startActivity(intent);
+                                    finish();
+                                }
+                                else
+                                {
+                                    Context context = getApplicationContext();
+                                    CharSequence text = "Unsuccessful Login attempt. Please try again";
+                                    int duration = Toast.LENGTH_SHORT;
+
+                                    Toast toast = Toast.makeText(context, text, duration);
+                                    toast.show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 
 
-                            Context context = getApplicationContext();
-                            CharSequence text = "Welcome"+ response.toString();
-                            int duration = Toast.LENGTH_SHORT;
 
-                            Toast toast = Toast.makeText(context, text, duration);
-                            toast.show();
+
+
 
                         }
                     },
@@ -418,10 +445,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             //fix this: for successful login
 
-            Intent intent = new Intent(LoginActivity.this, Home.class);
-            intent.putExtra("email", mEmailView.getText().toString());
-            startActivity(intent);
-            finish();
+
 //            if (success) {
 //                //finish();
 //            } else {

@@ -161,7 +161,7 @@ public class Home extends AppCompatActivity
                             TextView userEmail = (TextView) navigationView.getHeaderView(0).findViewById(R.id.userEmail);
                             Button button = (Button) navigationView.getHeaderView(0).findViewById(R.id.editProfile);
                             final Context context = getApplicationContext();
-                            CharSequence text = "Welcome" + response.toString();
+                            CharSequence text = "Successful";
                             int duration = Toast.LENGTH_SHORT;
 
                             Toast toast = Toast.makeText(context, text, duration);

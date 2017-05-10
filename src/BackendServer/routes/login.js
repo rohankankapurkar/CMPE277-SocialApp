@@ -68,24 +68,24 @@ function login(req ,res){
     mongo.connect(mongoURL, function(err, db){
         var coll = mongo.collection('Facebook');
 
-        coll.findOne({"username" : username}, function(err, user){
+        coll.findOne({"email" : username,"password" :password}, function(err, user){
             if (user) {
-                console.log("habibi is here" + user.username);
+                console.log("habibi is here" + user.email);
                 //res.code = 200;
                 //res.value = "Success Login";
                 //res.msg = msg;
                 console.log("found one entry in mongo db");
                 //res.send({"bc": "mc"});
                 //callback.send(res);
-                res.json({msg: username});
+                res.json({"status":200,"msg": username});
 
 
 
 
             } else {
                 console.log("habibi not returned false");
-                res.code = 401;
-                res.value = "Failed Login";
+                res.json({"status":401,"msg": "UnSuccessful"});
+
                 //callback(null, res);
                 //callback.send(res);
             }

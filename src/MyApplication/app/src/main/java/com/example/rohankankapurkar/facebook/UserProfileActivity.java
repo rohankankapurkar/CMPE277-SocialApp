@@ -41,6 +41,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class UserProfileActivity extends AppCompatActivity {
 
@@ -168,6 +169,7 @@ public class UserProfileActivity extends AppCompatActivity {
                             Log.d("*****Response", response);
                             Log.d("******res ", response.toString());
 
+                            Toast.makeText(UserProfileActivity.this, "Update Successful", Toast.LENGTH_LONG).show();
 
                             TextView em=(TextView) findViewById(R.id.userEmailText);
                             Intent intent = new Intent(UserProfileActivity.this, Home.class);
@@ -328,13 +330,13 @@ public class UserProfileActivity extends AppCompatActivity {
             try {
                 //getting image from gallery
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-
+                Random rnd = new Random();
                 //Setting image to ImageView
                 imgView.setImageBitmap(bitmap);
                 if(filePath != null) {
                     pd.show();
 
-                    StorageReference childRef = storageRef.child("image3.jpg");
+                    StorageReference childRef = storageRef.child("image"+rnd+".jpg");
                     //uploading the image
                     UploadTask uploadTask = childRef.putFile(filePath);
 

@@ -180,6 +180,8 @@ public class Home extends AppCompatActivity
                                         Intent userProfile = new Intent(Home.this,UserProfileActivity.class);
                                         userProfile.putExtra("firstname",firstname+" "+lastname);
                                         userProfile.putExtra("email",email);
+
+                                        //fix hardcoded values
                                         userProfile.putExtra("address","101 E San Fernando St");
                                         userProfile.putExtra("profession","Software Developer");
                                         userProfile.putExtra("interest","Travelling");

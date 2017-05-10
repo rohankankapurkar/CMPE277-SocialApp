@@ -414,6 +414,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
             showProgress(false);
+
+
+            //fix this: for successful login
+
             Intent intent = new Intent(LoginActivity.this, Home.class);
             intent.putExtra("email", mEmailView.getText().toString());
             startActivity(intent);

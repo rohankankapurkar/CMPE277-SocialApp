@@ -31,6 +31,42 @@ function getUserData(req ,res)
 
 }
 
-exports.getUserData = getUserData;
+function updateUserProfile(req ,res)
+{
 
+    console.log("********IN UPDATE_USER_PROFILE:");
+
+    var email = req.body.email;
+    var name = req.body.name;
+    var profession = req.body.profession;
+    var address = req.body.address;
+    var interests = req.body.interests;
+    var about = req.body.about;
+
+    mongo.connect(mongoURL, function(err, db){
+        var coll = mongo.collection('Facebook');
+
+        coll.updateOne({"email" : email}, {$set:{"firstname":name,"address":address,"profession":profession,"interests":interests,"about":about}}, function(err, user){
+            if (user) {
+                console.log("updated the user successfully");
+                res.statuscode = 0;
+
+
+            } else {
+                res.statuscode = 1;
+                res.message = "Error occurred while updating the user's information";
+                console.log("Error occurred while updating the user's information");
+
+
+            }
+        });
+
+
+    });
+
+}
+
+
+exports.getUserData = getUserData;
+exports.updateUserProfile = updateUserProfile;
 

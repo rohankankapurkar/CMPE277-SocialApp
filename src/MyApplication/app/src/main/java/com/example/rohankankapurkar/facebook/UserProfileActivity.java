@@ -1,10 +1,12 @@
 package com.example.rohankankapurkar.facebook;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -15,6 +17,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,11 +27,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserProfileActivity extends AppCompatActivity {
 
@@ -44,7 +56,7 @@ public class UserProfileActivity extends AppCompatActivity {
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReferenceFromUrl("gs://myapplication-574b6.appspot.com");
 
-
+    private  UpdateProfile updateProfileDetails = null;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -54,6 +66,8 @@ public class UserProfileActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         chooseImg = (Button)findViewById(R.id.uploadImg);
+        updateProfile =(Button) findViewById(R.id.updateProfile);
+
 
         loadTextDetails();
 
@@ -79,13 +93,21 @@ public class UserProfileActivity extends AppCompatActivity {
                 about.setVisibility(View.GONE);
                 newabout.setVisibility(View.VISIBLE);
 
-                updateProfile =(Button) findViewById(R.id.updateProfile);
                 updateProfile.setVisibility(View.VISIBLE);
 
                 chooseImg.setVisibility(View.VISIBLE);
 
 
 
+            }
+        });
+
+
+        updateProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(UserProfileActivity.this, "Saved successful", Toast.LENGTH_SHORT).show();
+                updateProfile();
             }
         });
 
@@ -99,6 +121,92 @@ public class UserProfileActivity extends AppCompatActivity {
 
 
 
+    }
+
+    private void updateProfile()
+    {
+        updateProfileDetails =  new UserProfileActivity.UpdateProfile(newname.getText().toString(), newaddress.getText().toString(),newprofession.getText().toString(),newinterest.getText().toString(),newabout.getText().toString());
+        updateProfileDetails.execute((Void) null);
+
+    }
+
+
+    //adding asynctask here
+    public class UpdateProfile extends AsyncTask<Void, Void, Boolean> {
+
+        private final String mName;
+        private final String mAddress;
+        private final String mprofession;
+        private final String minterest;
+        private final String maboutme;
+
+
+
+        UpdateProfile(String name, String address, String profession, String interest, String aboutme) {
+            mName = name;
+            mAddress = address;
+            mprofession=profession;
+            minterest = interest;
+            maboutme=aboutme;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+
+            Log.d("Inside_do_in_backgrund", "doInBackground: ");
+
+            Context context = getApplicationContext();
+            RequestQueue queue = Volley.newRequestQueue(context);  // this = context
+            String url = "http://10.0.2.2:3000/updateProfile";
+            StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>()
+                    {
+                        @Override
+                        public void onResponse(String response) {
+                            // response
+                            Log.d("Response", response);
+                            Log.d("res ", response.toString());
+
+
+
+                            Context context = getApplicationContext();
+                            CharSequence text = "user updated successfully"+ response.toString();
+                            int duration = Toast.LENGTH_SHORT;
+
+                            Toast toast = Toast.makeText(context, text, duration);
+                            toast.show();
+
+                        }
+                    },
+                    new Response.ErrorListener()
+                    {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            // error
+                            Log.d("Error.Response", error.toString());
+                        }
+                    }
+            ) {
+                @Override
+                protected Map<String, String> getParams()
+                {
+                    Map<String, String>  params = new HashMap<String, String>();
+
+                    params.put("email",newemail.getText().toString());
+                    params.put("name",newname.getText().toString());
+                    params.put("address",newaddress.getText().toString());
+                    params.put("profession",newprofession.getText().toString());
+                    params.put("interests",newinterest.getText().toString());
+                    params.put("about",newabout.getText().toString());
+
+                    return params;
+                }
+            };
+
+            //Log.d("12", "Before posting the request"+register_email.getText().toString());
+            queue.add(postRequest);
+            return true;
+        }
     }
 
     private void loadTextDetails()

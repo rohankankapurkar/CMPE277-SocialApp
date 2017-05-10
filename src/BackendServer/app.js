@@ -33,6 +33,7 @@ app.post('/login',login.login);
 app.post('/register',register.register);
 app.get('/getUserData',userdata.getUserData);
 app.post('/verifyUser',verifyUser.verify);
+app.post('/updateProfile',userdata.updateUserProfile);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

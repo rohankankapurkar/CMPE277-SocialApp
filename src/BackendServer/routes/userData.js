@@ -46,10 +46,11 @@ function updateUserProfile(req ,res)
     mongo.connect(mongoURL, function(err, db){
         var coll = mongo.collection('Facebook');
 
-        coll.updateOne({"email" : email}, {$set:{"firstname":name,"address":address,"profession":profession,"interests":interests,"about":about}}, function(err, user){
+        coll.updateOne({"email" : email}, {$set:{"displayName":name,"address":address,"profession":profession,"interests":interests,"about":about}}, function(err, user){
             if (user) {
                 console.log("updated the user successfully");
                 res.statuscode = 0;
+                res.json({"status":0,"user":user});
 
 
             } else {

@@ -106,8 +106,9 @@ public class UserProfileActivity extends AppCompatActivity {
         updateProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(UserProfileActivity.this, "Saved successful", Toast.LENGTH_SHORT).show();
                 updateProfile();
+
+
             }
         });
 
@@ -164,17 +165,15 @@ public class UserProfileActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(String response) {
                             // response
-                            Log.d("Response", response);
-                            Log.d("res ", response.toString());
+                            Log.d("*****Response", response);
+                            Log.d("******res ", response.toString());
 
 
-
-                            Context context = getApplicationContext();
-                            CharSequence text = "user updated successfully"+ response.toString();
-                            int duration = Toast.LENGTH_SHORT;
-
-                            Toast toast = Toast.makeText(context, text, duration);
-                            toast.show();
+                            TextView em=(TextView) findViewById(R.id.userEmailText);
+                            Intent intent = new Intent(UserProfileActivity.this, Home.class);
+                            intent.putExtra("email", em.getText().toString());
+                            startActivity(intent);
+                            finish();
 
                         }
                     },

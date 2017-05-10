@@ -220,6 +220,13 @@ public class Home extends AppCompatActivity
             return true;
         }
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getUserDetails();
+
+    }
 }
 
 

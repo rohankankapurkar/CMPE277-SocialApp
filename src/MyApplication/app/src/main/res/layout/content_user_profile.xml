@@ -6,6 +6,85 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.rohankankapurkar.facebook.UserProfileActivity"
+    android:background="@drawable/side_nav_bar"
+
     tools:showIn="@layout/activity_user_profile">
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="10dp"
+                android:id="@+id/profileIcon"
+                android:src="@drawable/profile"/>
+
+            <TextView
+                android:id="@+id/userNameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/profileIcon"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/profileIcon"
+                android:editable="true"
+                android:text="User Name"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="10dp"
+                android:id="@+id/emailIcon"
+                android:layout_below="@+id/profileIcon"
+                android:src="@drawable/email"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/userEmailText"
+                android:text="demoemail@example.com"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="@color/colorPrimary"
+                android:layout_marginLeft="10dp"
+                android:layout_alignTop="@+id/emailIcon"
+                android:layout_below="@+id/userNameText"
+                android:layout_toRightOf="@+id/emailIcon"/>
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="10dp"
+                android:id="@+id/addressIcon"
+                android:layout_below="@+id/emailIcon"
+                android:src="@drawable/address"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/userAddressText"
+                android:text="Demo Address"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="@color/colorPrimary"
+                android:layout_marginLeft="10dp"
+                android:layout_alignTop="@+id/addressIcon"
+                android:layout_below="@+id/userEmailText"
+                android:layout_toRightOf="@+id/addressIcon"/>
+
+
+
+        </RelativeLayout>
+
+
+
+    </ScrollView>
+</RelativeLayout>
 
 </android.support.v4.widget.NestedScrollView>

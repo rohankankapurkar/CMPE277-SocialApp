@@ -141,7 +141,7 @@ public class Home extends AppCompatActivity
     {
  public  JSONObject userDetails;
 
-        String firstname, lastname;
+        String firstname, lastname, email;
         @Override
         protected Boolean doInBackground(Void... params) {
 
@@ -171,13 +171,15 @@ public class Home extends AppCompatActivity
                                  firstname = userDetails.getString("firstname");
 
                                 lastname = userDetails.getString("lastname");
+                                 email =userDetails.getString("email");
                                 username.setText(firstname);
-                                userEmail.setText(userDetails.getString("email"));
+                                userEmail.setText(email);
                                 button.setOnClickListener(new View.OnClickListener() {
                                     public void onClick(View v)
                                     {
                                         Intent userProfile = new Intent(Home.this,UserProfileActivity.class);
                                         userProfile.putExtra("firstname",firstname+" "+lastname);
+                                        userProfile.putExtra("email",email);
                                         Home.this.startActivity(userProfile);
                                     }
                                 });

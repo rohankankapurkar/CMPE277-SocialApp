@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,8 +60,15 @@ public class UserProfileActivity extends AppCompatActivity {
             }
         });
         String firstname = getIntent().getStringExtra("firstname");
+
         TextView userEmail = (TextView) findViewById(R.id.firstname);
+        TextView name = (TextView) findViewById(R.id.userNameText);
+        TextView email = (TextView) findViewById(R.id.userEmailText);
+
         userEmail.setText(firstname);
+        name.setText(firstname);
+        email.setText(getIntent().getStringExtra("email"));
+
 
         ActivityCompat.requestPermissions(this,
                     new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},

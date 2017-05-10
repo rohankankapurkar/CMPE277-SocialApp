@@ -53,6 +53,7 @@ public class UserProfileActivity extends AppCompatActivity {
     TextView name, email, profession, address, interest, about;
     EditText newname, newemail, newprofession, newaddress, newinterest, newabout;
     Button updateProfile;
+    String imagePath;
     //creating reference to firebase storage
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReferenceFromUrl("gs://myapplication-574b6.appspot.com");
@@ -199,6 +200,8 @@ public class UserProfileActivity extends AppCompatActivity {
                     params.put("profession",newprofession.getText().toString());
                     params.put("interests",newinterest.getText().toString());
                     params.put("about",newabout.getText().toString());
+                    params.put("profilePic",imagePath);
+
 
                     return params;
                 }
@@ -218,9 +221,15 @@ public class UserProfileActivity extends AppCompatActivity {
         String interestVal = getIntent().getStringExtra("interest");
         String addressVal = getIntent().getStringExtra("address");
         String aboutVal = getIntent().getStringExtra("aboutme");
+        if(!getIntent().getStringExtra("profilePic").isEmpty() && getIntent().getStringExtra("profilePic")!= null)
+        {
+            String profilePicture =getIntent().getStringExtra("profilePic");
+            ImageView profileImg = (ImageView) findViewById(R.id.profileImage);
+            Log.d("IMAGE IMAGE",Uri.parse(profilePicture).toString());
+            profileImg.setImageURI(Uri.parse(profilePicture));
 
-
-        TextView userEmail = (TextView) findViewById(R.id.firstname);
+        }
+         TextView userEmail = (TextView) findViewById(R.id.firstname);
         userEmail.setText(nameVal);
 
         name = (TextView) findViewById(R.id.userNameText);
@@ -324,6 +333,7 @@ public class UserProfileActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePath = data.getData();
 
@@ -336,15 +346,32 @@ public class UserProfileActivity extends AppCompatActivity {
                 if(filePath != null) {
                     pd.show();
 
-                    StorageReference childRef = storageRef.child("image"+rnd+".jpg");
+                    String useremail = ((TextView) findViewById(R.id.userEmailText)).getText().toString();
+
+                    StorageReference childRef = storageRef.child("images/"+useremail+".jpg");
                     //uploading the image
                     UploadTask uploadTask = childRef.putFile(filePath);
 
                     uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
+                        {
+                            String useremail = ((TextView) findViewById(R.id.userEmailText)).getText().toString();
+
                             pd.dismiss();
                             Toast.makeText(UserProfileActivity.this, "Upload successful", Toast.LENGTH_SHORT).show();
+                            storageRef.child("images/"+useremail+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri)
+                                {
+                                    imagePath = uri.toString();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception exception) {
+                                    // Handle any errors
+                                }
+                            });
 
                         }
                     }).addOnFailureListener(new OnFailureListener() {

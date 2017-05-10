@@ -42,11 +42,12 @@ function updateUserProfile(req ,res)
     var address = req.body.address;
     var interests = req.body.interests;
     var about = req.body.about;
+    var profilePic= req.body.profilePic;
 
     mongo.connect(mongoURL, function(err, db){
         var coll = mongo.collection('Facebook');
 
-        coll.updateOne({"email" : email}, {$set:{"displayName":name,"address":address,"profession":profession,"interests":interests,"about":about}}, function(err, user){
+        coll.updateOne({"email" : email}, {$set:{"displayName":name,"address":address,"profession":profession,"interests":interests,"about":about,"profilePic":profilePic}}, function(err, user){
             if (user) {
                 console.log("updated the user successfully");
                 res.statuscode = 0;

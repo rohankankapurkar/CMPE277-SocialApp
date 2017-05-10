@@ -141,7 +141,7 @@ public class Home extends AppCompatActivity
     {
  public  JSONObject userDetails;
 
-        String firstname, lastname, email;
+        String firstname, lastname, email, profilePic;
         @Override
         protected Boolean doInBackground(Void... params) {
 
@@ -169,9 +169,12 @@ public class Home extends AppCompatActivity
                             try {
                                  userDetails = new JSONObject(response);
                                  firstname = userDetails.getString("firstname");
-
-                                lastname = userDetails.getString("lastname");
+                                 lastname = userDetails.getString("lastname");
                                  email =userDetails.getString("email");
+                                if(userDetails.getString("profilePic") != null && !userDetails.getString("profilePic").isEmpty()) {
+                                    profilePic = userDetails.getString("profilePic");
+                                }
+
                                 username.setText(firstname);
                                 userEmail.setText(email);
                                 button.setOnClickListener(new View.OnClickListener() {
@@ -180,6 +183,11 @@ public class Home extends AppCompatActivity
                                         Intent userProfile = new Intent(Home.this,UserProfileActivity.class);
                                         userProfile.putExtra("firstname",firstname+" "+lastname);
                                         userProfile.putExtra("email",email);
+                                        if(profilePic != null && !profilePic.isEmpty())
+                                        {
+                                            userProfile.putExtra("profilePic",profilePic);
+
+                                        }
 
                                         //fix hardcoded values
                                         userProfile.putExtra("address","101 E San Fernando St");

@@ -378,13 +378,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                  res = new JSONObject(response);
                                 if(res.getInt("status")== 200 )
                                 {
-                                    Context context = getApplicationContext();
-                                    CharSequence text = "Welcome"+ response.toString();
-                                    int duration = Toast.LENGTH_SHORT;
-
-                                    Toast toast = Toast.makeText(context, text, duration);
-                                    toast.show();
-
                                     Intent intent = new Intent(LoginActivity.this, Home.class);
                                     intent.putExtra("email", mEmailView.getText().toString());
                                     startActivity(intent);
@@ -395,7 +388,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                     Context context = getApplicationContext();
                                     CharSequence text = "Unsuccessful Login attempt. Please try again";
                                     int duration = Toast.LENGTH_SHORT;
-
                                     Toast toast = Toast.makeText(context, text, duration);
                                     toast.show();
                                 }

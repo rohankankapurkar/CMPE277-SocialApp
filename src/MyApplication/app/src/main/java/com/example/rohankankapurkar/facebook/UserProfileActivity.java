@@ -22,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -55,6 +56,7 @@ public class UserProfileActivity extends AppCompatActivity {
     EditText newname, newemail, newprofession, newaddress, newinterest, newabout;
     Button updateProfile;
     String imagePath;
+    CheckBox cb;
     //creating reference to firebase storage
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReferenceFromUrl("gs://myapplication-574b6.appspot.com");
@@ -102,6 +104,8 @@ public class UserProfileActivity extends AppCompatActivity {
 
 
 
+
+
             }
         });
 
@@ -129,6 +133,8 @@ public class UserProfileActivity extends AppCompatActivity {
 
     private void updateProfile()
     {
+
+
         updateProfileDetails =  new UserProfileActivity.UpdateProfile(newname.getText().toString(), newaddress.getText().toString(),newprofession.getText().toString(),newinterest.getText().toString(),newabout.getText().toString());
         updateProfileDetails.execute((Void) null);
 
@@ -145,13 +151,13 @@ public class UserProfileActivity extends AppCompatActivity {
         private final String maboutme;
 
 
-
         UpdateProfile(String name, String address, String profession, String interest, String aboutme) {
             mName = name;
             mAddress = address;
             mprofession=profession;
             minterest = interest;
             maboutme=aboutme;
+
         }
 
         @Override
@@ -202,13 +208,12 @@ public class UserProfileActivity extends AppCompatActivity {
                     params.put("interests",newinterest.getText().toString());
                     params.put("about",newabout.getText().toString());
                     params.put("profilePic",imagePath);
-
+                    params.put("isPrivate", String.valueOf(cb.isChecked()));
 
                     return params;
                 }
             };
 
-            //Log.d("12", "Before posting the request"+register_email.getText().toString());
             queue.add(postRequest);
             return true;
         }
@@ -227,7 +232,6 @@ public class UserProfileActivity extends AppCompatActivity {
             String profilePicture =getIntent().getStringExtra("profilePic");
             ImageView profileImg = (ImageView) findViewById(R.id.profileImage);
             Log.d("IMAGE IMAGE",Uri.parse(profilePicture).toString());
-        //    profileImg.setImageURI(Uri.parse(profilePicture));
             imagePath = profilePicture;
             Picasso.with(this)
                     .load(profilePicture)
@@ -265,6 +269,10 @@ public class UserProfileActivity extends AppCompatActivity {
         newprofession.setText(professionVal);
         newinterest.setText(interestVal);
         newabout.setText(aboutVal);
+
+
+        cb = (CheckBox) findViewById(R.id.visibility);
+        cb.setChecked(true);
 
 
     }

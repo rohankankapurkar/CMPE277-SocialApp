@@ -232,21 +232,8 @@
                 android:src="@drawable/lock"/>
 
 
-
-            <Button
-                android:id="@+id/updateProfile"
-                android:layout_width="70dp"
-                android:layout_height="30dp"
-                android:layout_marginRight="20dp"
-                android:text="Save"
-                android:visibility="visible"
-                android:textColor="@color/white"
-                android:background="@color/colorPrimary"
-                android:layout_below="@+id/checkBox"
-                android:layout_alignParentEnd="true" />
-
             <CheckBox
-                android:id="@+id/checkBox"
+                android:id="@+id/visibility"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/profilevis"
@@ -255,6 +242,20 @@
                 android:layout_marginLeft="20dp"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold" />
+
+
+
+            <Button
+                android:id="@+id/updateProfile"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:layout_marginRight="20dp"
+                android:text="Save"
+                android:visibility="gone"
+                android:textColor="@color/white"
+                android:background="@color/colorPrimary"
+                android:layout_below="@+id/visibility"
+                android:layout_alignParentEnd="true" />
 
 
         </RelativeLayout>

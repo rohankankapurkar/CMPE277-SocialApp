@@ -118,13 +118,21 @@ public class Home extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+            // nachiket handle the friend list button
+
+            Toast.makeText(this, id + "NACHIKET-FRIENDLIST LOGIC", Toast.LENGTH_SHORT).show();
+
+
         } else if (id == R.id.nav_gallery) {
 
+            Toast.makeText(this, id + "NACHIKET-DISCOVER FRIENDS LOGIC", Toast.LENGTH_SHORT).show();
+            Intent friendList = new Intent(Home.this, FriendListActivity.class);
+            Home.this.startActivity(friendList);
+
         } else if (id == R.id.nav_slideshow) {
-
+            Log.d("NACHIKET", "slideshow button clicked");
         }  else if (id == R.id.nav_share) {
-
+            Log.d("NACHIKET", "share button clicked");
         } else if (id == R.id.nav_send) {
 
         }

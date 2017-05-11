@@ -16,7 +16,6 @@
      android:id="@+id/app_bar"
      android:layout_width="match_parent"
      android:layout_height="@dimen/app_bar_height"
-     android:background="@drawable/side_nav_bar"
      android:fitsSystemWindows="true"
      android:theme="@style/AppTheme.AppBarOverlay"
      android:weightSum="1">
@@ -24,6 +23,12 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg1" />
 
             <ImageView
                 android:id="@+id/profileImage"
@@ -32,7 +37,9 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginStart="40dp"
                 app:srcCompat="@drawable/profileicon"
+                android:background="@drawable/border"
                 android:layout_centerVertical="true"
+                android:scaleType="fitXY"
                 android:layout_alignParentStart="true" />
 
             <Button
@@ -49,13 +56,17 @@
                 android:id="@+id/firstname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/profileImage"
                 android:paddingTop="7dp"
+                android:paddingStart="10dp"
                 android:text="NAME"
-                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                android:textAlignment="textStart"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                android:textSize="30dp" />
+                android:textSize="30dp"
+                android:layout_alignTop="@+id/profileImage"
+                android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@+id/profileImage" />
 
         </RelativeLayout>
 

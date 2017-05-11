@@ -238,6 +238,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/profilevis"
                 android:layout_toRightOf="@+id/profilevis"
+                android:buttonTint="@color/black"
                 android:text="Private"
                 android:layout_marginLeft="20dp"
                 android:textColor="@color/colorPrimary"

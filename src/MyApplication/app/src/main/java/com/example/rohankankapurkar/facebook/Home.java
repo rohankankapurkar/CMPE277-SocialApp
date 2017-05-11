@@ -143,7 +143,7 @@ public class Home extends AppCompatActivity
     {
  public  JSONObject userDetails;
 
-        String firstname, lastname, email, profilePic, address, profession, interests, aboutme;
+        String firstname, lastname, email, profilePic, address, profession, interests, aboutme, isPrivate;
         @Override
         protected Boolean doInBackground(Void... params) {
 
@@ -195,7 +195,7 @@ public class Home extends AppCompatActivity
                                         interests = userDetails.getString("interests");
                                     }
 
-
+                                isPrivate = userDetails.getString("isPrivate");
 
 
 
@@ -210,6 +210,8 @@ public class Home extends AppCompatActivity
                                         Intent userProfile = new Intent(Home.this,UserProfileActivity.class);
                                         userProfile.putExtra("firstname",firstname+" "+lastname);
                                         userProfile.putExtra("email",email);
+                                        userProfile.putExtra("isPrivate",isPrivate);
+
                                         if(profilePic != null && !profilePic.isEmpty())
                                         {
                                             userProfile.putExtra("profilePic",profilePic);

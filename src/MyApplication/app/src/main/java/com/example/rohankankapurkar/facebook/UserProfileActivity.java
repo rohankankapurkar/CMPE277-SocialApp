@@ -227,6 +227,7 @@ public class UserProfileActivity extends AppCompatActivity {
         String interestVal = getIntent().getStringExtra("interests");
         String addressVal = getIntent().getStringExtra("address");
         String aboutVal = getIntent().getStringExtra("aboutme");
+        String isPrivate =  getIntent().getStringExtra("isPrivate");
         if(!getIntent().getStringExtra("profilePic").isEmpty() && getIntent().getStringExtra("profilePic")!= null)
         {
             String profilePicture =getIntent().getStringExtra("profilePic");
@@ -272,7 +273,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
 
         cb = (CheckBox) findViewById(R.id.visibility);
-        cb.setChecked(true);
+        cb.setChecked(Boolean.parseBoolean(isPrivate));
 
 
     }

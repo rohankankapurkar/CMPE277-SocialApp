@@ -174,23 +174,23 @@ public class Home extends AppCompatActivity
                                  firstname = userDetails.getString("firstname");
                                  lastname = userDetails.getString("lastname");
                                  email =userDetails.getString("email");
-                                     if(isValid("profilePic"))
+                                     if(userDetails.has("profilePic"))
                                      {
                                             profilePic = userDetails.getString("profilePic");
                                      }
-                                    if(isValid("address"))
+                                    if(userDetails.has("address"))
                                     {
                                         address = userDetails.getString("address");
                                     }
-                                    if(isValid("profession"))
+                                    if(userDetails.has("profession"))
                                     {
                                         profession = userDetails.getString("profession");
                                     }
-                                    if(isValid("about"))
+                                    if(userDetails.has("about"))
                                     {
                                         aboutme = userDetails.getString("about");
                                     }
-                                    if(isValid("interests"))
+                                    if(userDetails.has("interests"))
                                     {
                                         interests = userDetails.getString("interests");
                                     }
@@ -201,9 +201,13 @@ public class Home extends AppCompatActivity
 
                                 username.setText(firstname);
                                 userEmail.setText(email);
-                                Picasso.with(getApplicationContext())
-                                        .load(profilePic)
-                                        .into(profile);
+                                if(profilePic != null && !profilePic.isEmpty())
+                                {
+                                    Picasso.with(getApplicationContext())
+                                            .load(profilePic)
+                                            .into(profile);
+                                }
+
                                 button.setOnClickListener(new View.OnClickListener() {
                                     public void onClick(View v)
                                     {
@@ -286,10 +290,7 @@ public class Home extends AppCompatActivity
             return true;
         }
 
-        private boolean isValid(String field) throws JSONException
-        {
-            return userDetails.getString(field) != null && !userDetails.getString(field).isEmpty();
-        }
+
     }
 
     @Override

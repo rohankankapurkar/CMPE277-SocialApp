@@ -228,7 +228,7 @@ public class UserProfileActivity extends AppCompatActivity {
         String addressVal = getIntent().getStringExtra("address");
         String aboutVal = getIntent().getStringExtra("aboutme");
         String isPrivate =  getIntent().getStringExtra("isPrivate");
-        if(!getIntent().getStringExtra("profilePic").isEmpty() && getIntent().getStringExtra("profilePic")!= null)
+        if(getIntent().getStringExtra("profilePic")!= null)
         {
             String profilePicture =getIntent().getStringExtra("profilePic");
             ImageView profileImg = (ImageView) findViewById(R.id.profileImage);

@@ -11,6 +11,7 @@ var login = require('./routes/login');
 var userdata = require('./routes/userData');
 var register = require('./routes/register');
 var verifyUser = require('./routes/verifyUser');
+var friendList =  require('./routes/friendList');
 
 var app = express();
 
@@ -31,9 +32,12 @@ app.use('/users', users);
 
 app.post('/login',login.login);
 app.post('/register',register.register);
-app.get('/getUserData',userdata.getUserData);
 app.post('/verifyUser',verifyUser.verify);
 app.post('/updateProfile',userdata.updateUserProfile);
+
+
+app.get('/getUserData',userdata.getUserData);
+app.get('/getFriendList',friendList.getFriendList);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -52,5 +56,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+console.log("launching");
 
 module.exports = app;

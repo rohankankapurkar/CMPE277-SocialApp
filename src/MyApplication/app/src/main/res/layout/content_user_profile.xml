@@ -239,7 +239,7 @@
                 android:layout_alignTop="@+id/profilevis"
                 android:layout_toRightOf="@+id/profilevis"
                 android:buttonTint="@color/black"
-                android:text="Private"
+                android:text="Friends Only"
                 android:layout_marginLeft="20dp"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold" />

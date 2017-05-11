@@ -238,6 +238,9 @@ public class UserProfileActivity extends AppCompatActivity {
                     .load(profilePicture)
                     .into(profileImg);
         }
+        else {
+            imagePath = "https://firebasestorage.googleapis.com/v0/b/myapplication-574b6.appspot.com/o/images%2Fprofileicon.png?alt=media&token=964a058b-6aef-4cdb-b1f0-b3307c3d4fc8";
+        }
          TextView userEmail = (TextView) findViewById(R.id.firstname);
         userEmail.setText(nameVal);
 

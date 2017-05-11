@@ -38,7 +38,7 @@
                 android:layout_alignParentEnd="true" />
             <EditText
                 android:id="@+id/userName"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/profileIcon"
                 android:layout_marginLeft="20dp"
@@ -74,7 +74,7 @@
                 android:layout_alignEnd="@+id/userAddressText" />
             <EditText
                 android:id="@+id/userEmail"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/emailIcon"
                 android:layout_marginLeft="20dp"
@@ -110,7 +110,7 @@
                 android:layout_alignEnd="@+id/userProfessionText" />
             <EditText
                 android:id="@+id/userAddress"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/addressIcon"
                 android:visibility="gone"
@@ -144,7 +144,7 @@
                 android:layout_toRightOf="@+id/professionIcon" />
             <EditText
                 android:id="@+id/userProfession"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/professionIcon"
                 android:layout_marginLeft="20dp"
@@ -177,7 +177,7 @@
                 android:layout_alignEnd="@+id/userProfessionText" />
             <EditText
                 android:id="@+id/userInterests"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/interestIcon"
                 android:layout_marginLeft="20dp"
@@ -211,7 +211,7 @@
                 android:layout_alignEnd="@+id/userInterestsText" />
             <EditText
                 android:id="@+id/userAboutMe"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/aboutmeIcon"
                 android:layout_marginLeft="20dp"

@@ -219,7 +219,7 @@ public class UserProfileActivity extends AppCompatActivity {
         String nameVal = getIntent().getStringExtra("firstname");
         String emailVal = getIntent().getStringExtra("email");
         String professionVal = getIntent().getStringExtra("profession");
-        String interestVal = getIntent().getStringExtra("interest");
+        String interestVal = getIntent().getStringExtra("interests");
         String addressVal = getIntent().getStringExtra("address");
         String aboutVal = getIntent().getStringExtra("aboutme");
         if(!getIntent().getStringExtra("profilePic").isEmpty() && getIntent().getStringExtra("profilePic")!= null)

@@ -143,7 +143,7 @@ public class Home extends AppCompatActivity
     {
  public  JSONObject userDetails;
 
-        String firstname, lastname, email, profilePic;
+        String firstname, lastname, email, profilePic, address, profession, interests, aboutme;
         @Override
         protected Boolean doInBackground(Void... params) {
 
@@ -174,9 +174,30 @@ public class Home extends AppCompatActivity
                                  firstname = userDetails.getString("firstname");
                                  lastname = userDetails.getString("lastname");
                                  email =userDetails.getString("email");
-                                if(userDetails.getString("profilePic") != null && !userDetails.getString("profilePic").isEmpty()) {
-                                    profilePic = userDetails.getString("profilePic");
-                                }
+                                     if(isValid("profilePic"))
+                                     {
+                                            profilePic = userDetails.getString("profilePic");
+                                     }
+                                    if(isValid("address"))
+                                    {
+                                        address = userDetails.getString("address");
+                                    }
+                                    if(isValid("profession"))
+                                    {
+                                        profession = userDetails.getString("profession");
+                                    }
+                                    if(isValid("about"))
+                                    {
+                                        aboutme = userDetails.getString("about");
+                                    }
+                                    if(isValid("interests"))
+                                    {
+                                        interests = userDetails.getString("interests");
+                                    }
+
+
+
+
 
                                 username.setText(firstname);
                                 userEmail.setText(email);
@@ -192,14 +213,43 @@ public class Home extends AppCompatActivity
                                         if(profilePic != null && !profilePic.isEmpty())
                                         {
                                             userProfile.putExtra("profilePic",profilePic);
-
                                         }
 
-                                        //fix hardcoded values
-                                        userProfile.putExtra("address","101 E San Fernando St");
-                                        userProfile.putExtra("profession","Software Developer");
-                                        userProfile.putExtra("interest","Travelling");
-                                        userProfile.putExtra("aboutme","Want to travel the whole world");
+                                        if(interests != null && !interests.isEmpty())
+                                        {
+                                            userProfile.putExtra("interests",interests);
+                                        }
+                                        else
+                                        {
+                                            userProfile.putExtra("interests","Travelling");
+                                        }
+                                        if(address != null && !address.isEmpty())
+                                        {
+                                            userProfile.putExtra("address",address);
+
+                                        }
+                                        else
+                                        {
+                                            userProfile.putExtra("address","101 E San Fernando St");
+
+                                        }
+                                        if(profession != null && !profession.isEmpty())
+                                        {
+                                            userProfile.putExtra("profession",profession);
+                                        }
+                                        else
+                                        {
+                                            userProfile.putExtra("profession","Software Developer");
+                                        }
+                                        if(aboutme != null && !aboutme.isEmpty())
+                                        {
+                                            userProfile.putExtra("aboutme",aboutme);
+
+                                        }
+                                        else
+                                        {
+                                            userProfile.putExtra("aboutme","Want to travel the whole world");
+                                        }
 
 
                                         Home.this.startActivity(userProfile);
@@ -232,6 +282,11 @@ public class Home extends AppCompatActivity
             );
             queue.add(postRequest);
             return true;
+        }
+
+        private boolean isValid(String field) throws JSONException
+        {
+            return userDetails.getString(field) != null && !userDetails.getString(field).isEmpty();
         }
     }
 

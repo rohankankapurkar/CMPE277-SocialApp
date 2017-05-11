@@ -38,6 +38,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -226,8 +227,11 @@ public class UserProfileActivity extends AppCompatActivity {
             String profilePicture =getIntent().getStringExtra("profilePic");
             ImageView profileImg = (ImageView) findViewById(R.id.profileImage);
             Log.d("IMAGE IMAGE",Uri.parse(profilePicture).toString());
-            profileImg.setImageURI(Uri.parse(profilePicture));
-
+        //    profileImg.setImageURI(Uri.parse(profilePicture));
+            imagePath = profilePicture;
+            Picasso.with(this)
+                    .load(profilePicture)
+                    .into(profileImg);
         }
          TextView userEmail = (TextView) findViewById(R.id.firstname);
         userEmail.setText(nameVal);

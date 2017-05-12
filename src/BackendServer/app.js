@@ -34,6 +34,7 @@ app.post('/login',login.login);
 app.post('/register',register.register);
 app.post('/verifyUser',verifyUser.verify);
 app.post('/updateProfile',userdata.updateUserProfile);
+app.post('/sendFriendRequest',friendList.sendFriendRequest);
 
 
 app.get('/getUserData',userdata.getUserData);
@@ -56,6 +57,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-console.log("launching");
+console.log("server running on port: 3000");
 
 module.exports = app;

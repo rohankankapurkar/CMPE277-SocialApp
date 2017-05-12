@@ -28,4 +28,40 @@ function getFriendList(req, res) {
 
 }
 
+function sendFriendRequest(req ,res){
+
+    console.log("********NACHIKET: Inside sendFriendRequest function********");
+
+    var email = req.body.email;
+    console.log("email: "+ email);
+
+    /* mongo.connect(mongoURL, function(err, db){
+        var collection_friends = mongo.collection('Friends');
+
+       collection_friends.updateOne(
+        		{"email" : email}, {
+        			$set:{"displayName":name,
+        			"address":address,
+        			"profession":profession,
+        			"interests":interests,
+        			"about":about,
+        			"profilePic":profilePic,
+        			"isPrivate":isPrivate}}, function(err, user){
+		            
+        				if (user) {
+		                console.log("updated the user successfully");
+		                res.statuscode = 0;
+		                res.json({"status":0,"user":user});
+		                } else {
+		                res.statuscode = 1;
+		                res.message = "Error occurred while updating the user's information";
+		                console.log("Error occurred while updating the user's information");
+            }
+        });
+
+    });*/
+
+}
+
 exports.getFriendList = getFriendList;
+exports.sendFriendRequest = sendFriendRequest;

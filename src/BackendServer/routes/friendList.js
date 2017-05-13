@@ -63,5 +63,15 @@ function sendFriendRequest(req ,res){
 
 }
 
+function followFriend(req ,res){
+
+    console.log("********NACHIKET: Inside followFriend function********");
+
+    var email = req.body.email;
+    console.log("email: "+ email);
+
+}
+
 exports.getFriendList = getFriendList;
 exports.sendFriendRequest = sendFriendRequest;
+exports.followFriend = followFriend;

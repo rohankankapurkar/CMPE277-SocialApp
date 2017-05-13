@@ -35,6 +35,7 @@ app.post('/register',register.register);
 app.post('/verifyUser',verifyUser.verify);
 app.post('/updateProfile',userdata.updateUserProfile);
 app.post('/sendFriendRequest',friendList.sendFriendRequest);
+app.post('/followFriend',friendList.followFriend);
 
 
 app.get('/getUserData',userdata.getUserData);

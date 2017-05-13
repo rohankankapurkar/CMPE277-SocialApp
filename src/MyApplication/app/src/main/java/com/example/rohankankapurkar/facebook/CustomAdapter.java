@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,28 +58,44 @@ public class CustomAdapter extends BaseAdapter{
         TextView firstName;
         TextView lastName;
         TextView email;
-        ImageView addFriendImage;
+        /*ImageView addFriendImage;*/
+        /*Spinner myFriendsOptionSpinner;*/
+        Button addFriendButton;
+        Button followFriendButton;
+        Button messageButton;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Holder holder;
+
+        //View superView = super.getView(position, convertView, parent);
         View view = convertView;
+        Holder holder = null;
+
         if(convertView==null) {
             view = inflater.inflate(R.layout.friend_list_item,parent,false);
             holder = new Holder();
             holder.firstName = (TextView) view.findViewById(R.id.ffname);
             holder.lastName = (TextView) view.findViewById(R.id.flname);
             holder.email = (TextView) view.findViewById(R.id.femail);
-            holder.addFriendImage = (ImageView) view.findViewById(R.id.addFriend);
+
+            holder.addFriendButton = (Button) view.findViewById(R.id.addfriend);
+            holder.followFriendButton = (Button) view.findViewById(R.id.followfriend);
+            holder.messageButton = (Button) view.findViewById(R.id.message);
+
             view.setTag(holder);
 
-            /******** Set Item Click Listner for LayoutInflater for each row *******/
-            holder.addFriendImage.setOnClickListener(new View.OnClickListener() {
+            holder.addFriendButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    /******** call your sendRequest function *******/
                     sendFriendRequest();
+                }
+            });
+
+            holder.followFriendButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    followFriend();
                 }
             });
 
@@ -94,9 +112,12 @@ public class CustomAdapter extends BaseAdapter{
     private void sendFriendRequest() {
         /******** Make API call for your friendRequest logic *******/
         Log.v("NACHIKET", "=====INSIDE sendFriendRequest=====");
-
-        /*sendFriendRequest =  new sendFriendRequestTask();
-        sendFriendRequest.execute((Void) null);*/
         ((FriendListActivity) mContext).sendFriendRequest();
+    }
+
+    private void followFriend() {
+        /******** Make API call for your followFriend logic *******/
+        Log.v("NACHIKET", "=====INSIDE followFriend=====");
+        ((FriendListActivity) mContext).followFriend();
     }
 }

@@ -70,8 +70,7 @@ public class Home extends AppCompatActivity
 
     }
 
-    private void getUserDetails()
-    {
+    private void getUserDetails() {
         mAuthTask = new UserProfile();
         mAuthTask.execute((Void) null);
     }
@@ -102,7 +101,7 @@ public class Home extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.logout) {
-            Intent logout = new Intent(Home.this,LoginActivity.class);
+            Intent logout = new Intent(Home.this, LoginActivity.class);
             Home.this.startActivity(logout);
 
             return true;
@@ -126,12 +125,17 @@ public class Home extends AppCompatActivity
         } else if (id == R.id.nav_gallery) {
 
             Toast.makeText(this, id + "NACHIKET-DISCOVER FRIENDS LOGIC", Toast.LENGTH_SHORT).show();
+            //pass username as session ID to the new intent here
+
             Intent friendList = new Intent(Home.this, FriendListActivity.class);
+            String username = getIntent().getExtras().getString("email");
+            friendList.putExtra("email", username);
+
             Home.this.startActivity(friendList);
 
         } else if (id == R.id.nav_slideshow) {
             Log.d("NACHIKET", "slideshow button clicked");
-        }  else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_share) {
             Log.d("NACHIKET", "share button clicked");
         } else if (id == R.id.nav_send) {
 
@@ -147,18 +151,17 @@ public class Home extends AppCompatActivity
      * Represents an asynchronous get user data information
      * the user.
      */
-    public class UserProfile extends AsyncTask<Void, Void, Boolean>
-    {
- public  JSONObject userDetails;
+    public class UserProfile extends AsyncTask<Void, Void, Boolean> {
+        public JSONObject userDetails;
 
         String firstname, lastname, email, profilePic, address, profession, interests, aboutme, isPrivate;
+
         @Override
         protected Boolean doInBackground(Void... params) {
 
-
             RequestQueue queue = Volley.newRequestQueue(mainContext);  // this = context
-            String username= getIntent().getExtras().getString("email");
-            String url = String.format("http://10.0.2.2:3000/getUserData?username=%1$s",username);
+            String username = getIntent().getExtras().getString("email");
+            String url = String.format("http://10.0.2.2:3000/getUserData?username=%1$s", username);
             StringRequest postRequest = new StringRequest(Request.Method.GET, url,
                     new Response.Listener<String>() {
                         @Override
@@ -170,7 +173,7 @@ public class Home extends AppCompatActivity
                             TextView username = (TextView) navigationView.getHeaderView(0).findViewById(R.id.username);
                             TextView userEmail = (TextView) navigationView.getHeaderView(0).findViewById(R.id.userEmail);
                             Button button = (Button) navigationView.getHeaderView(0).findViewById(R.id.editProfile);
-                            ImageView profile =(ImageView)navigationView.getHeaderView(0).findViewById(R.id.imageView);
+                            ImageView profile = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.imageView);
                             final Context context = getApplicationContext();
                             CharSequence text = "Successful";
                             int duration = Toast.LENGTH_SHORT;
@@ -178,91 +181,70 @@ public class Home extends AppCompatActivity
                             Toast toast = Toast.makeText(context, text, duration);
                             toast.show();
                             try {
-                                 userDetails = new JSONObject(response);
-                                 firstname = userDetails.getString("firstname");
-                                 lastname = userDetails.getString("lastname");
-                                 email =userDetails.getString("email");
-                                     if(userDetails.has("profilePic"))
-                                     {
-                                            profilePic = userDetails.getString("profilePic");
-                                     }
-                                    if(userDetails.has("address"))
-                                    {
-                                        address = userDetails.getString("address");
-                                    }
-                                    if(userDetails.has("profession"))
-                                    {
-                                        profession = userDetails.getString("profession");
-                                    }
-                                    if(userDetails.has("about"))
-                                    {
-                                        aboutme = userDetails.getString("about");
-                                    }
-                                    if(userDetails.has("interests"))
-                                    {
-                                        interests = userDetails.getString("interests");
-                                    }
+                                userDetails = new JSONObject(response);
+                                firstname = userDetails.getString("firstname");
+                                lastname = userDetails.getString("lastname");
+                                email = userDetails.getString("email");
+                                if (userDetails.has("profilePic")) {
+                                    profilePic = userDetails.getString("profilePic");
+                                }
+                                if (userDetails.has("address")) {
+                                    address = userDetails.getString("address");
+                                }
+                                if (userDetails.has("profession")) {
+                                    profession = userDetails.getString("profession");
+                                }
+                                if (userDetails.has("about")) {
+                                    aboutme = userDetails.getString("about");
+                                }
+                                if (userDetails.has("interests")) {
+                                    interests = userDetails.getString("interests");
+                                }
 
                                 isPrivate = userDetails.getString("isPrivate");
 
 
-
                                 username.setText(firstname);
                                 userEmail.setText(email);
-                                if(profilePic != null && !profilePic.isEmpty())
-                                {
+                                if (profilePic != null && !profilePic.isEmpty()) {
                                     Picasso.with(getApplicationContext())
                                             .load(profilePic)
                                             .into(profile);
                                 }
 
                                 button.setOnClickListener(new View.OnClickListener() {
-                                    public void onClick(View v)
-                                    {
-                                        Intent userProfile = new Intent(Home.this,UserProfileActivity.class);
-                                        userProfile.putExtra("firstname",firstname+" "+lastname);
-                                        userProfile.putExtra("email",email);
-                                        userProfile.putExtra("isPrivate",isPrivate);
+                                    public void onClick(View v) {
+                                        Intent userProfile = new Intent(Home.this, UserProfileActivity.class);
+                                        userProfile.putExtra("firstname", firstname + " " + lastname);
+                                        userProfile.putExtra("email", email);
+                                        userProfile.putExtra("isPrivate", isPrivate);
 
-                                        if(profilePic != null && !profilePic.isEmpty())
-                                        {
-                                            userProfile.putExtra("profilePic",profilePic);
+                                        if (profilePic != null && !profilePic.isEmpty()) {
+                                            userProfile.putExtra("profilePic", profilePic);
                                         }
 
-                                        if(interests != null && !interests.isEmpty())
-                                        {
-                                            userProfile.putExtra("interests",interests);
+                                        if (interests != null && !interests.isEmpty()) {
+                                            userProfile.putExtra("interests", interests);
+                                        } else {
+                                            userProfile.putExtra("interests", "Travelling");
                                         }
-                                        else
-                                        {
-                                            userProfile.putExtra("interests","Travelling");
-                                        }
-                                        if(address != null && !address.isEmpty())
-                                        {
-                                            userProfile.putExtra("address",address);
+                                        if (address != null && !address.isEmpty()) {
+                                            userProfile.putExtra("address", address);
+
+                                        } else {
+                                            userProfile.putExtra("address", "101 E San Fernando St");
 
                                         }
-                                        else
-                                        {
-                                            userProfile.putExtra("address","101 E San Fernando St");
+                                        if (profession != null && !profession.isEmpty()) {
+                                            userProfile.putExtra("profession", profession);
+                                        } else {
+                                            userProfile.putExtra("profession", "Software Developer");
+                                        }
+                                        if (aboutme != null && !aboutme.isEmpty()) {
+                                            userProfile.putExtra("aboutme", aboutme);
 
-                                        }
-                                        if(profession != null && !profession.isEmpty())
-                                        {
-                                            userProfile.putExtra("profession",profession);
-                                        }
-                                        else
-                                        {
-                                            userProfile.putExtra("profession","Software Developer");
-                                        }
-                                        if(aboutme != null && !aboutme.isEmpty())
-                                        {
-                                            userProfile.putExtra("aboutme",aboutme);
-
-                                        }
-                                        else
-                                        {
-                                            userProfile.putExtra("aboutme","Want to travel the whole world");
+                                        } else {
+                                            userProfile.putExtra("aboutme", "Want to travel the whole world");
                                         }
 
 
@@ -271,17 +253,9 @@ public class Home extends AppCompatActivity
                                 });
 
 
-
-
-
-
-                            }
-                            catch (JSONException e)
-                            {
+                            } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-
-
 
 
                         }

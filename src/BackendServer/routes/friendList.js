@@ -34,32 +34,7 @@ function sendFriendRequest(req ,res){
 
     var email = req.body.email;
     console.log("email: "+ email);
-
-    /* mongo.connect(mongoURL, function(err, db){
-        var collection_friends = mongo.collection('Friends');
-
-       collection_friends.updateOne(
-        		{"email" : email}, {
-        			$set:{"displayName":name,
-        			"address":address,
-        			"profession":profession,
-        			"interests":interests,
-        			"about":about,
-        			"profilePic":profilePic,
-        			"isPrivate":isPrivate}}, function(err, user){
-		            
-        				if (user) {
-		                console.log("updated the user successfully");
-		                res.statuscode = 0;
-		                res.json({"status":0,"user":user});
-		                } else {
-		                res.statuscode = 1;
-		                res.message = "Error occurred while updating the user's information";
-		                console.log("Error occurred while updating the user's information");
-            }
-        });
-
-    });*/
+    res.send("temp");
 
 }
 
@@ -69,9 +44,39 @@ function followFriend(req ,res){
 
     var email = req.body.email;
     console.log("email: "+ email);
+    res.send("temp");
 
 }
 
+function getSearchFriendList(req ,res){
+
+    console.log("********NACHIKET: Inside getSearchFriendList function********");
+
+    var email = req.body.email;
+    var searchParam = req.body.searchParam;
+    console.log("email: "+ email);
+    console.log("searchParam: "+ searchParam);
+    
+	mongo.connect(mongoURL, function(err, db) {
+		var collection_facebook = mongo.collection('Facebook');
+		
+		collection_facebook.find({"email":  searchParam }).toArray(function(err, user) {
+			if (user) {
+				res.json(user);
+				console.log("***************", user);
+
+			} else {
+				console.log("returned false");
+				res.code = 401;
+
+			}
+		});
+
+	});
+
+}
+
+exports.getSearchFriendList = getSearchFriendList;
 exports.getFriendList = getFriendList;
 exports.sendFriendRequest = sendFriendRequest;
 exports.followFriend = followFriend;

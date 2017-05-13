@@ -5,6 +5,9 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -28,9 +31,16 @@ public class FriendListActivity extends AppCompatActivity {
     private friendListGenerationTask friendListGeneration = null;
     private sendFriendRequestTask sendFriendRequest = null;
     private followFriendTask followFriend = null;
+    private searchFriendsTask searchFriends = null;
+
     private ArrayList<ListModel> friendList = null;
     private ListView friendLv;
     private CustomAdapter friendAdapter;
+    private Button searchButton;
+    private Button addButton;
+    private EditText searchEmail;
+
+    String api_url = "http://10.0.2.2:3000";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +52,36 @@ public class FriendListActivity extends AppCompatActivity {
 
     public void init() {
         friendLv = (ListView) findViewById(R.id.friend_list_lv);
+        searchButton = (Button) findViewById(R.id.search);
+        addButton = (Button) findViewById(R.id.add);
+
+        //Search button functionality implementation
+        searchEmail = (EditText) findViewById(R.id.edit_text);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("NACHIKET", searchEmail.getText().toString());
+
+                if (searchEmail.getText().toString().length() == 0) {
+                    getFriendList();
+                } else {
+                    search(searchEmail.getText().toString());
+                }
+            }
+        });
+
+        //add friend functionality implementation
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //add();
+            }
+        });
+    }
+
+    private void search(String searchParam) {
+        searchFriends = new searchFriendsTask(searchParam);
+        searchFriends.execute((Void) null);
     }
 
     private void getFriendList() {
@@ -60,6 +100,76 @@ public class FriendListActivity extends AppCompatActivity {
         followFriend.execute((Void) null);
     }
 
+
+    //Following class takes care of searching friends from text box
+    public class searchFriendsTask extends AsyncTask<Void, Void, Boolean> {
+
+        String searchParam;
+        public searchFriendsTask(String searchParam) {
+            super();
+            this.searchParam = searchParam;
+            // do stuff
+        }
+        @Override
+        protected Boolean doInBackground(Void... params) {
+
+            Log.d("NACHIKET", "inside function searchFriendsTask ASYNC task: ");
+            Context context = getApplicationContext();
+            RequestQueue queue = Volley.newRequestQueue(context);
+            String url = api_url + "/getSearchFriendList";
+
+            final String username = getIntent().getExtras().getString("email");
+            Log.d("NACHIKET", "SESSION BELONGS TO: " + username);
+
+            StringRequest getRequest = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            // response
+                            Log.d("NACHIKET", response);
+                            Log.d("NACHIEKT", response.toString());
+
+                            try {
+                                JSONArray arr = new JSONArray(response.toString());
+                                friendList.clear();
+                                for (int i = 0; i < arr.length(); i++) {
+                                    JSONObject jsonObj = arr.getJSONObject(i);
+                                    friendList.add(new ListModel(jsonObj.getString("firstname"), jsonObj.getString("lastname"), jsonObj.getString("email")));
+                                }
+
+                                friendAdapter.notifyDataSetChanged();
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            Toast.makeText(FriendListActivity.this, "POST CONNECTION ESTABLISHED", Toast.LENGTH_LONG).show();
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            // error
+                            Log.d("Error.Response", error.toString());
+                        }
+                    }
+            ) {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<String, String>();
+
+                    params.put("email", username);
+                    params.put("searchParam", searchParam);
+
+                    return params;
+                }
+            };
+
+            queue.add(getRequest);
+            return true;
+        }
+    }
+
     //Following class takes care of creating FriendList and bringing it to the ListView
     public class friendListGenerationTask extends AsyncTask<Void, Void, Boolean> {
 
@@ -68,7 +178,7 @@ public class FriendListActivity extends AppCompatActivity {
 
             Context context = getApplicationContext();
             RequestQueue queue = Volley.newRequestQueue(context);  // this = context
-            String url = "http://10.0.2.2:3000/getFriendList";
+            String url = api_url + "/getFriendList";
 
 
             StringRequest getRequest = new StringRequest(Request.Method.GET, url,
@@ -118,7 +228,9 @@ public class FriendListActivity extends AppCompatActivity {
             Log.d("NACHIKET", "inside function sendFriendRequestTask ASYNC task: ");
             Context context = getApplicationContext();
             RequestQueue queue = Volley.newRequestQueue(context);
-            String url = "http://10.0.2.2:3000/sendFriendRequest";
+
+            String url = api_url + "/sendFriendRequest";
+
             final String username = getIntent().getExtras().getString("email");
             Log.d("NACHIKET", "SESSION BELONGS TO: " + username);
 
@@ -140,19 +252,14 @@ public class FriendListActivity extends AppCompatActivity {
                             Log.d("Error.Response", error.toString());
                         }
                     }
-
-
             ) {
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();
-
                     params.put("email", username);
-
                     return params;
                 }
             };
-
             queue.add(postRequest);
             return true;
         }
@@ -168,7 +275,7 @@ public class FriendListActivity extends AppCompatActivity {
             Log.d("NACHIKET", "inside function followFriendTask ASYNC task: ");
             Context context = getApplicationContext();
             RequestQueue queue = Volley.newRequestQueue(context);
-            String url = "http://10.0.2.2:3000/followFriend";
+            String url = api_url + "/followFriend";
             final String username = getIntent().getExtras().getString("email");
 
             StringRequest postRequest = new StringRequest(Request.Method.POST, url,
@@ -193,13 +300,10 @@ public class FriendListActivity extends AppCompatActivity {
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();
-
                     params.put("email", username);
-
                     return params;
                 }
             };
-
             queue.add(postRequest);
             return true;
         }

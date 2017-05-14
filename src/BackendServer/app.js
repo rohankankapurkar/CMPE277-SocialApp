@@ -34,13 +34,15 @@ app.post('/login',login.login);
 app.post('/register',register.register);
 app.post('/verifyUser',verifyUser.verify);
 app.post('/updateProfile',userdata.updateUserProfile);
+
 app.post('/sendFriendRequest',friendList.sendFriendRequest);
 app.post('/followFriend',friendList.followFriend);
 app.post('/getSearchFriendList',friendList.getSearchFriendList);
-
+app.post('/discoverFriends',friendList.discoverFriends);
+app.post('/getFriendList',friendList.getFriendList);
 
 app.get('/getUserData',userdata.getUserData);
-app.get('/getFriendList',friendList.getFriendList);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -90,8 +90,8 @@ public class FriendListActivity extends AppCompatActivity {
         friendListGeneration.execute((Void) null);
     }
 
-    public void sendFriendRequest() {
-        sendFriendRequest = new sendFriendRequestTask();
+    public void sendFriendRequest(String friend_req_sent_to) {
+        sendFriendRequest = new sendFriendRequestTask(friend_req_sent_to);
         sendFriendRequest.execute((Void) null);
     }
 
@@ -177,11 +177,12 @@ public class FriendListActivity extends AppCompatActivity {
         protected Boolean doInBackground(Void... params) {
 
             Context context = getApplicationContext();
-            RequestQueue queue = Volley.newRequestQueue(context);  // this = context
-            String url = api_url + "/getFriendList";
+            RequestQueue queue = Volley.newRequestQueue(context);
+            final String username = getIntent().getExtras().getString("email");
+            String url = api_url + "/discoverFriends";
 
 
-            StringRequest getRequest = new StringRequest(Request.Method.GET, url,
+            StringRequest getRequest = new StringRequest(Request.Method.POST, url,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -213,7 +214,14 @@ public class FriendListActivity extends AppCompatActivity {
                             Log.d("Error.Response", error.toString());
                         }
                     }
-            );
+            ){
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("email", username);
+                    return params;
+                }
+            };
             queue.add(getRequest);
             return true;
         }
@@ -222,6 +230,12 @@ public class FriendListActivity extends AppCompatActivity {
     //Following class takes care of sending a friend request
     public class sendFriendRequestTask extends AsyncTask<Void, Void, Boolean> {
 
+        String friend_req_sent_to;
+        public sendFriendRequestTask(String friend_req_sent_to) {
+            super();
+            this.friend_req_sent_to = friend_req_sent_to;
+            // do stuff
+        }
         @Override
         protected Boolean doInBackground(Void... params) {
 
@@ -257,6 +271,7 @@ public class FriendListActivity extends AppCompatActivity {
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();
                     params.put("email", username);
+                    params.put("friend_req_sent_to", friend_req_sent_to);
                     return params;
                 }
             };

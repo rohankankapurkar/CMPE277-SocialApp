@@ -117,16 +117,17 @@ public class Home extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            // nachiket handle the friend list button
 
             Toast.makeText(this, id + "NACHIKET-FRIENDLIST LOGIC", Toast.LENGTH_SHORT).show();
-
+            Intent friendList = new Intent(Home.this, ShowFriendActivity.class);
+            String username = getIntent().getExtras().getString("email");
+            friendList.putExtra("email", username);
+            Home.this.startActivity(friendList);
 
         } else if (id == R.id.nav_gallery) {
 
             Toast.makeText(this, id + "NACHIKET-DISCOVER FRIENDS LOGIC", Toast.LENGTH_SHORT).show();
             //pass username as session ID to the new intent here
-
             Intent friendList = new Intent(Home.this, FriendListActivity.class);
             String username = getIntent().getExtras().getString("email");
             friendList.putExtra("email", username);

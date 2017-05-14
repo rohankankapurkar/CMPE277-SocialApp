@@ -102,10 +102,6 @@ public class UserProfileActivity extends AppCompatActivity {
 
                 chooseImg.setVisibility(View.VISIBLE);
 
-
-
-
-
             }
         });
 

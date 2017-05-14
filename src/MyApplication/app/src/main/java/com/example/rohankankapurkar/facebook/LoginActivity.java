@@ -434,7 +434,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
 
-
             //fix this: for successful login
 
 

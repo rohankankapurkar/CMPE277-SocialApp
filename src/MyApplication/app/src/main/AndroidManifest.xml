@@ -41,6 +41,10 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".FriendListActivity" />
         <activity android:name=".ShowFriendActivity"></activity>
+        <activity android:name=".Album.ViewAlbumsPage"></activity>
+        <activity android:name=".Album.AddAlbumDelatils"></activity>
+        <activity android:name=".Album.PreviewSelectedImage"></activity>
+        <activity android:name=".Album.ViewSelectedAlbumPage"></activity>
     </application>
 
 </manifest>

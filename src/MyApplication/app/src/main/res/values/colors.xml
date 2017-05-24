@@ -16,4 +16,7 @@
     <item name="white" type="color">#FFFFFFFF</item>
     m>
     <item name="black" type="color">#000</item>
+    <!--Album-->
+    <item name="colorCardViewLightBlue" type="color">#E6F2FF</item>
+    <!--EndAlbum-->
 </resources>

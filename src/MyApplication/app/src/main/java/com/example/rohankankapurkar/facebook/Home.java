@@ -27,6 +27,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.rohankankapurkar.facebook.Album.ViewAlbumsPage;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -134,7 +135,17 @@ public class Home extends AppCompatActivity
 
             Home.this.startActivity(friendList);
 
-        } else if (id == R.id.nav_slideshow) {
+        }
+        else if(id==R.id.nav_album){
+            Toast.makeText(this, id + "Album!", Toast.LENGTH_SHORT).show();
+            Log.i("keke", "Album clciked: ");
+            //pass username as session ID to the new intent here
+            Intent viewAlbumIntent = new Intent(Home.this, ViewAlbumsPage.class);
+            String username = getIntent().getExtras().getString("email");
+            viewAlbumIntent.putExtra("username", username);
+            Home.this.startActivity(viewAlbumIntent);
+        }
+        else if (id == R.id.nav_slideshow) {
             Log.d("NACHIKET", "slideshow button clicked");
         } else if (id == R.id.nav_share) {
             Log.d("NACHIKET", "share button clicked");

@@ -22,6 +22,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,7 +61,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void attemptRegister() {
-        Log.d("hmmm2", "onCreate: pringing emal"+register_email.getText().toString());
+        Log.d("hmmm2", "onCreate: printing emal"+register_email.getText().toString());
         userRegisterTask =  new UserRegisterTask(register_email.getText().toString(), register_password.getText().toString(),register_firstname.getText().toString(),register_lastname.getText().toString(),register_password_confirm.getText().toString());
         userRegisterTask.execute((Void) null);
 
@@ -99,22 +102,33 @@ public class RegisterActivity extends AppCompatActivity {
                         public void onResponse(String response) {
                             // response
                             Log.d("Response", response);
-                            Log.d("res ", response.toString());
+                            Log.d("res in register dudes ", response.toString());
 
 
 
                             Context context = getApplicationContext();
                             CharSequence text = "user added successfully"+ response.toString();
                             int duration = Toast.LENGTH_SHORT;
-
-                            Toast toast = Toast.makeText(context, text, duration);
-                            toast.show();
+                            String msg = null;
+                            try {
+                                msg = new JSONObject(response.toString()).getString("msg");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                             //adding code to navigate to confirm mail request.
+                            if(msg.equalsIgnoreCase("Duplicate")){
 
-                            Intent confirmMailIntent = new Intent(RegisterActivity.this,ConfirmMailActivity.class);
-                            String send_email = register_email.getText().toString();
-                            confirmMailIntent.putExtra("email",send_email);
-                            RegisterActivity.this.startActivity(confirmMailIntent);
+                                Toast toast = Toast.makeText(context, "Duplicate user. This email is registered alreday", duration);
+                                toast.show();
+                                Log.d("slayer", "onResponse: slater ");
+                            }else {
+                                Toast toast = Toast.makeText(context, text, duration);
+                                toast.show();
+                                Intent confirmMailIntent = new Intent(RegisterActivity.this, ConfirmMailActivity.class);
+                                String send_email = register_email.getText().toString();
+                                confirmMailIntent.putExtra("email", send_email);
+                                RegisterActivity.this.startActivity(confirmMailIntent);
+                            }
 
                         }
                     },

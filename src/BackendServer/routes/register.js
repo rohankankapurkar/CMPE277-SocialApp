@@ -35,6 +35,84 @@ function register(req ,res){
         var val = Math.floor(1000 + Math.random() * 9000);
         console.log(val);
 
+
+        //adding here to restrict duplicate user
+console.log("printint email"+email);
+        coll.findOne({"email" : email}, function(err, user){
+            if (user) {
+                console.log(user.email);
+                //console.log("user"+ JSON.stringify(user));
+                console.log("Duplicate registration detected");
+
+                res.json({msg:"Duplicate"});
+            } else {
+               //send mail if tries to register
+                coll.insert({email : email, "password": password, "firstname" : firstname, "lastname" : lastname, "password_confirm": password_confirm, "verification" : val, "isPrivate" : "false"}, function(err, user){
+                    if (user) {
+                        //logic to send mail here
+                        var mailer = require("nodemailer");
+
+// Use Smtp Protocol to send Email
+                        var smtpTransport = nodemailer.createTransport({
+                            service: "gmail",
+                            host: "smtp.gmail.com",
+                            auth: {
+                                user: "cmpe277slash@gmail.com",
+                                pass: "rohankankapurkar"
+                            }
+                        });
+
+
+                        var mailOptions={
+                            to : email,
+                            subject : 'Here is your authentication code from CMPE 277 project',
+                            text : val+"  Enter this code in the application "
+                        }
+                        console.log(mailOptions);
+                        smtpTransport.sendMail(mailOptions, function(error, response){
+                            if(error){
+                                console.log(error);
+                                res.end("error");
+                            }else{
+                                console.log("Message sent: " + response.message);
+                                res.end("sent");
+                            }
+                        });
+
+
+
+
+
+
+
+
+                        console.log("User added successfully");
+
+                        res.json({msg: val});
+                    } else {
+                        console.log("returned false");
+                        res.code = 401;
+                        res.value = "Failed Login";
+                    }
+                });
+                console.log("succesfully sent mail");
+
+
+
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+/*
         coll.insert({email : email, "password": password, "firstname" : firstname, "lastname" : lastname, "password_confirm": password_confirm, "verification" : val, "isPrivate" : "false"}, function(err, user){
             if (user) {
                 //logic to send mail here
@@ -83,6 +161,7 @@ function register(req ,res){
                 res.value = "Failed Login";
             }
         });
+*/
 
     });
 }

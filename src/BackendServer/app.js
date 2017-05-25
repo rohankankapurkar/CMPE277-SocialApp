@@ -12,6 +12,7 @@ var userdata = require('./routes/userData');
 var register = require('./routes/register');
 var verifyUser = require('./routes/verifyUser');
 var friendList =  require('./routes/friendList');
+var sendPosts = require('./routes/sendPosts');
 
 var app = express();
 
@@ -42,6 +43,7 @@ app.post('/discoverFriends',friendList.discoverFriends);
 app.post('/getFriendList',friendList.getFriendList);
 
 app.get('/getUserData',userdata.getUserData);
+app.post('/sendPosts',sendPosts.sendPosts);
 
 
 // catch 404 and forward to error handler

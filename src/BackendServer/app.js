@@ -44,7 +44,7 @@ app.post('/getFriendList',friendList.getFriendList);
 
 app.get('/getUserData',userdata.getUserData);
 app.post('/sendPosts',sendPosts.sendPosts);
-
+app.post('/updateUserPreferences',userdata.updateUserPreferances);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

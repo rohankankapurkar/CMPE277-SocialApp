@@ -287,7 +287,7 @@ public class UserProfileActivity extends AppCompatActivity {
             String profilePicture =getIntent().getStringExtra("profilePic");
             ImageView profileImg = (ImageView) findViewById(R.id.profileImage);
             Log.d("IMAGE IMAGE",Uri.parse(profilePicture).toString());
-            //*imagePath = profilePicture;
+            imagePath = profilePicture;
             Picasso.with(this)
                     .load(profilePicture)
                     .into(profileImg);

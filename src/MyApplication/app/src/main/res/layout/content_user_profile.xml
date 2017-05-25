@@ -229,6 +229,7 @@
                 android:layout_margin="10dp"
                 android:id="@+id/profilevis"
                 android:layout_below="@+id/aboutmeIcon"
+                android:visibility="gone"
                 android:src="@drawable/lock"/>
 
 

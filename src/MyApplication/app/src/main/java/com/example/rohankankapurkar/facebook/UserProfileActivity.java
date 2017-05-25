@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,7 +73,7 @@ public class UserProfileActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         chooseImg = (Button)findViewById(R.id.uploadImg);
         updateProfile =(Button) findViewById(R.id.updateProfile);
-
+        createTabs();
 
         loadTextDetails();
 
@@ -135,6 +136,30 @@ public class UserProfileActivity extends AppCompatActivity {
         updateProfileDetails.execute((Void) null);
 
     }
+
+
+    private void createTabs()
+    {
+        TabHost tabHost = (TabHost)findViewById(R.id.tabHost1);
+        tabHost.setup();
+        TabHost.TabSpec tab1 = tabHost.newTabSpec("First Tab");
+        TabHost.TabSpec tab2 = tabHost.newTabSpec("Second Tab");
+
+
+        tab1.setIndicator("ABOUTS");
+        tab1.setContent(R.id.Abouts);
+
+        tab2.setIndicator("POSTS");
+        tab2.setContent(R.id.Posts);
+
+
+
+        tabHost.addTab(tab1);
+        tabHost.addTab(tab2);
+
+
+    }
+
 
 
     //adding asynctask here

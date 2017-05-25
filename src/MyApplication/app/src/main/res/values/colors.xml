@@ -14,8 +14,13 @@
     <item name="darkorange" type="color">#FFFF8800</item>
     <item name="darkred" type="color">#FFCC0000</item>
     <item name="white" type="color">#FFFFFFFF</item>
-    m>
+    <color name="feed_bg">#ffffffff</color>
+    <color name="feed_item_bg">#ffffff</color>
+    <color name="feed_item_border">#c2c3c8</color>
+    <color name="link">#0a80d1</color>
+    <color name="timestamp">#000000</color>
     <item name="black" type="color">#000</item>
+
     <!--Album-->
     <item name="colorCardViewLightBlue" type="color">#E6F2FF</item>
     <!--EndAlbum-->

@@ -78,10 +78,6 @@ function login(req ,res){
                 //res.send({"bc": "mc"});
                 //callback.send(res);
                 res.json({"status":200,"msg": username});
-
-
-
-
             } else {
                 console.log("habibi not returned false");
                 res.json({"status":401,"msg": "UnSuccessful"});

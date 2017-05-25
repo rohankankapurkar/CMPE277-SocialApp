@@ -45,23 +45,6 @@ function sendPosts(req ,res){
             // console.log(JSON.stringify(user.friends));
 
 
-/*
-          user.friends.forEach(function (friend){
-
-              console.log(friend.friend_email);
-              coll.update({"email" : friend.friend_email}, { $push: { "myHomeTweets":message  } } ,function(err, user){
-                  if (user) {
-                      console.log("Home tweet added in  "+friend.friend_email);
-                      res.json({msg:"Done"});
-                  } else {
-                      //send mail if tries to register
-                      //console.log("Error occurred while sending tweet");
-                      console.log("Error message for  "+friend.friend_email);
-                  }
-              });
-          })
-*/
-
             var myFriends = [];
             function findUsers(){
                 console.log("*****Last here****");
@@ -80,7 +63,7 @@ function sendPosts(req ,res){
                 console.log("Printint all my friends"+myFriends);
                 var coll = mongo.collection('Facebook');
 
-                coll.updateMany({"email" : {$in : myFriends}}, { $push: { "myHomeTweets":{"message":message,"time":d } } }, {upsert:true},function(err, user){
+                coll.updateMany({"email" : {$in : myFriends}}, { $push: { "myHomeTweets":{from: email,"message":message,"time":d } } }, {upsert:true},function(err, user){
                     if (user) {
                         console.log("Sent tweet to mongo successfully");
                         console.log("******Wasnt that sexy piece of code******");
@@ -120,29 +103,36 @@ function sendPosts(req ,res){
 }
 
 
-//
-// function update( index,  msg,  friends){
-//     var coll = mongo.collection('Facebook');
-//     if(index>=friends.size){
-//         return ;
-//     }
-//     console.log(index+'------'+friends[0].friend_email);
-//     coll.update({"email" : friends[index].friend_email}, { $push: { "myHomeTweets":msg  } } ,function(err, user){
-//
-//         if (user) {
-//             console.log("Home tweet added in  "+user.friend_email);
-//             res.json({msg:"Done"});
-//         } else {
-//             //send mail if tries to register
-//
-//             console.log(err);
-//         }
-//         return;
-//         update(index+1, msg, friends);
-//     });
-// }
+function getHomePosts(req ,res){
+    //msg = {username:"rohan", password:"rohan"}
+    console.log(req.body.email);
+    mongo.connect(mongoURL, function(err, db){
+        var coll = mongo.collection('Facebook');
+        var email = req.body.email;
+        console.log(req.body.email+"Printing email here");
+
+        coll.findOne({"email" : email}, function(err, user){
+            if (user) {
+                var homeTweets = user.myHomeTweets;
+                console.log(homeTweets.msg);
+                console.log("*****Found the user in the mongoDB.******");
+                res.json({"msg": homeTweets});
+            } else {
+                console.log("No user account found");
+                res.json({"status":401,"msg": "UnSuccessful"});
+
+            }
+        });
+
+
+    });
+    // res.send("");
+}
+
+
 
 
 
 
 exports.sendPosts = sendPosts;
+exports.getHomePosts = getHomePosts;

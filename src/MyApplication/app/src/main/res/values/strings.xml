@@ -44,5 +44,14 @@
         <item>Private</item>
     </string-array>
     <!--EndAlbum-->
+    <!--Settings-->
+    <string name="settings">Settings</string>
+    <string name="privacyQuestion">Who can see your profile?</string>
+    <string name="friendsOlnyPrivacy">FriendsOnly</string>
+    <string name="publicPrivacy">Public</string>
+    <string name="email">Email</string>
+    <string name="mobile">Mobile</string>
+    <string name="notificationQuestion">How You Get Notifications</string>
+
 
 </resources>

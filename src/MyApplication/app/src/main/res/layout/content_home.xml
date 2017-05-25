@@ -9,99 +9,48 @@
     tools:showIn="@layout/app_bar_home">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="368dp"
+        android:layout_height="495dp"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context="com.example.rohankankapurkar.facebook.UserProfileActivity"
-        tools:showIn="@layout/app_bar_home">
-
+        tools:showIn="@layout/app_bar_home"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp">
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-        android:orientation="vertical"
-            android:paddingBottom="@dimen/feed_item_padding_top_bottom"
-            android:paddingTop="@dimen/feed_item_padding_top_bottom" >
-
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
             <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/feed_item_padding_left_right"
-                android:paddingRight="@dimen/feed_item_padding_left_right" >
-
-                <ImageView
-                    android:id="@+id/profilePic"
-                    android:layout_width="@dimen/feed_item_profile_pic"
-                    android:layout_height="@dimen/feed_item_profile_pic"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/profile">
-                </ImageView>
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:orientation="vertical">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:padding="5dp"
+                    android:gravity="top"
+                    android:background="#E6E6E6"
+                    android:id="@+id/mytweet_tv"/>
+                <Button
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingLeft="@dimen/feed_item_profile_info_padd" >
-
-                    <TextView
-                        android:id="@+id/name"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/feed_item_profile_name"
-                        android:textStyle="bold"
-                        android:text="Name"/>
-
-                    <TextView
-                        android:id="@+id/timestamp"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/timestamp"
-                        android:textSize="@dimen/feed_item_timestamp"
-                        android:text="timestamp"/>
-                </LinearLayout>
+                    android:id="@+id/post_tweet_button"
+                    android:text="POST"
+                    android:layout_gravity="right"/>
             </LinearLayout>
-
             <TextView
-                android:id="@+id/txtStatusMsg"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="5dp"
-                android:paddingLeft="@dimen/feed_item_status_pad_left_right"
-                android:paddingRight="@dimen/feed_item_status_pad_left_right"
-                android:paddingTop="@dimen/feed_item_status_pad_top"
-                android:text="Status Msg"/>
-
-            <TextView
-                android:id="@+id/txtUrl"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:linksClickable="true"
-                android:paddingBottom="10dp"
-                android:paddingLeft="@dimen/feed_item_status_pad_left_right"
-                android:paddingRight="@dimen/feed_item_status_pad_left_right"
-                android:textColorLink="@color/link"
-                android:text="URL"/>
-
+                android:text="Tweets"/>
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:dividerHeight="2dp"
+                android:id="@+id/tweets_lv">
+            </ListView>
         </LinearLayout>
+
     </LinearLayout>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </android.support.constraint.ConstraintLayout>

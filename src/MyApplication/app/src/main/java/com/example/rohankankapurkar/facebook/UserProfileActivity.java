@@ -296,7 +296,7 @@ public class UserProfileActivity extends AppCompatActivity {
         userEmail.setText(nameVal);
 
 
-        //parseJsonFeed(new JSONArray(myTweets),emailVal,imagePath);
+        parseJsonFeed(new JSONArray(myTweets),emailVal,imagePath);
 
         name.setText(nameVal);
         email.setText(emailVal);

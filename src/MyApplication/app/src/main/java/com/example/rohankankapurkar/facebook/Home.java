@@ -17,7 +17,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,9 +33,11 @@ import com.example.rohankankapurkar.facebook.Album.ViewAlbumsPage;
 import com.example.rohankankapurkar.facebook.Settings.Viewsettings;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,6 +46,12 @@ public class Home extends AppCompatActivity
 
     Context mainContext = this;
     private UserProfile mAuthTask = null;
+    private ArrayList<TweetPojo> tweetList;
+    private TweetAdapter tweetAdapter;
+    private ListView tweetListView;
+    private Button postTweet;
+    private EditText myTweet;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +78,18 @@ public class Home extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
+        tweetList = new ArrayList<>();
+        tweetAdapter = new TweetAdapter(this,tweetList);
+        tweetListView = (ListView) findViewById(R.id.tweets_lv);
+        tweetListView.setAdapter(tweetAdapter);
+        postTweet = (Button) findViewById(R.id.post_tweet_button);
+        myTweet = (EditText) findViewById(R.id.mytweet_tv);
+        postTweet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                postTweet(myTweet.getText().toString());
+            }
+        });
     }
 
     private void getUserDetails() {
@@ -300,7 +320,92 @@ public class Home extends AppCompatActivity
             queue.add(postRequest);
             return true;
         }
+    }
 
+    private void getUserTweets() {
+
+        Context context = getApplicationContext();
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = "http://10.0.2.2:3000/getHomePosts";
+
+        final String username = getIntent().getExtras().getString("email");
+        Log.d("NACHIKET", "SESSION BELONGS TO: " + username);
+
+        StringRequest getRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        Log.d("NACHIKET", response);
+                        Log.d("NACHIEKT", response.toString());
+
+                        try {
+                            JSONArray arr = (new JSONObject(response.toString())).getJSONArray("msg");
+                            tweetList.clear();
+                            for (int i = 0; i < arr.length(); i++) {
+                                JSONObject jsonObj = arr.getJSONObject(i);
+                                tweetList.add(new TweetPojo(jsonObj.has("from")?jsonObj.getString("from"):""
+                                                            , jsonObj.has("time")?jsonObj.getString("time"):""
+                                                            , jsonObj.has("message")?jsonObj.getString("message"):""));
+                            }
+                            tweetAdapter.notifyDataSetChanged();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("Error.Response", error.toString());
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("email", username);
+                return params;
+            }
+        };
+
+        queue.add(getRequest);
+    }
+
+    private void postTweet(final String message) {
+        if (message.trim().length()<1) {
+            return;
+        }
+        Context context = getApplicationContext();
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = "http://10.0.2.2:3000/sendPosts";
+        final String username = getIntent().getExtras().getString("email");
+
+        StringRequest getRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(Home.this,"Post Shared!",Toast.LENGTH_SHORT).show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("Error.Response", error.toString());
+                        Toast.makeText(Home.this,"Server Problem!",Toast.LENGTH_SHORT).show();
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("email", username);
+                params.put("message", message.trim());
+                return params;
+            }
+        };
+
+        queue.add(getRequest);
 
     }
 
@@ -308,7 +413,7 @@ public class Home extends AppCompatActivity
     protected void onStart() {
         super.onStart();
         getUserDetails();
-
+        getUserTweets();
     }
 }
 

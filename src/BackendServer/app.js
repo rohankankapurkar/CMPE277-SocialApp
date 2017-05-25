@@ -45,6 +45,7 @@ app.post('/acceptFriendRequest',friendList.acceptFriendRequest);
 
 app.get('/getUserData',userdata.getUserData);
 app.post('/sendPosts',sendPosts.sendPosts);
+app.post('/getHomePosts',sendPosts.getHomePosts);
 app.post('/updateUserPreferences',userdata.updateUserPreferances);
 
 // catch 404 and forward to error handler

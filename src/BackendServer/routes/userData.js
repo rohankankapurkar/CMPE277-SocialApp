@@ -101,9 +101,43 @@ function updateUserPreferances(req ,res)
     });
 
 }
+function updateUserPreferances(req ,res)
+{
+
+    console.log("********IN User settings:");
+
+    var email = req.body.email;
+    var notification = req.body.notification;
+    var isPrivate = req.body.isPrivate;
+
+    mongo.connect(mongoURL, function(err, db){
+        var coll = mongo.collection('Facebook');
+
+        coll.updateOne({"email" : email}, {$set:{"notification":notification,"isPrivate":isPrivate}}, function(err, user){
+            if (user) {
+                console.log("updated the user successfully");
+                res.statuscode = 0;
+                res.json({"status":0,"user":user});
+
+
+            } else {
+                res.statuscode = 1;
+                res.message = "Error occurred while updating the user's information";
+                console.log("Error occurred while updating the user's information");
+
+            }
+        });
+
+
+    });
+
+}
+
+
+
 
 
 
 exports.getUserData = getUserData;
 exports.updateUserProfile = updateUserProfile;
-
+exports.updateUserPreferances = updateUserPreferances;

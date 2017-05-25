@@ -41,11 +41,11 @@ app.post('/followFriend',friendList.followFriend);
 app.post('/getSearchFriendList',friendList.getSearchFriendList);
 app.post('/discoverFriends',friendList.discoverFriends);
 app.post('/getFriendList',friendList.getFriendList);
+app.post('/acceptFriendRequest',friendList.acceptFriendRequest);
 
 app.get('/getUserData',userdata.getUserData);
 app.post('/sendPosts',sendPosts.sendPosts);
 app.post('/updateUserPreferences',userdata.updateUserPreferances);
-app.post('/getHomePosts',sendPosts.getHomePosts);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

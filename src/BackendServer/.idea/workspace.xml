@@ -47,6 +47,9 @@
 =======
             <state relative-caret-position="842">
               <caret line="109" column="0" selection-start-line="109" selection-start-column="0" selection-end-line="109" selection-end-column="0" />
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
               <folding>
                 <element signature="e#0#46#0" expanded="false" />
@@ -69,8 +72,13 @@
         <entry file="file://$PROJECT_DIR$/routes/register.js">
           <provider selected="true" editor-type-id="text-editor">
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             <state relative-caret-position="1155">
               <caret line="144" column="18" lean-forward="false" selection-start-line="144" selection-start-column="18" selection-end-line="144" selection-end-column="18" />
+=======
+            <state relative-caret-position="345">
+              <caret line="97" column="9" selection-start-line="97" selection-start-column="9" selection-end-line="97" selection-end-column="9" />
+>>>>>>> Stashed changes
 =======
             <state relative-caret-position="345">
               <caret line="97" column="9" selection-start-line="97" selection-start-column="9" selection-end-line="97" selection-end-column="9" />
@@ -84,6 +92,7 @@
         </entry>
       </file>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       <file leaf-file-name="friendList.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/friendList.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -94,6 +103,8 @@
           </provider>
         </entry>
       </file>
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
       <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
@@ -110,8 +121,13 @@
         <entry file="file://$PROJECT_DIR$/routes/sendPosts.js">
           <provider selected="true" editor-type-id="text-editor">
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             <state relative-caret-position="1335">
               <caret line="89" column="16" lean-forward="false" selection-start-line="89" selection-start-column="16" selection-end-line="89" selection-end-column="16" />
+=======
+            <state relative-caret-position="507">
+              <caret line="77" column="33" selection-start-line="77" selection-start-column="33" selection-end-line="77" selection-end-column="33" />
+>>>>>>> Stashed changes
 =======
             <state relative-caret-position="507">
               <caret line="77" column="33" selection-start-line="77" selection-start-column="33" selection-end-line="77" selection-end-column="33" />
@@ -156,7 +172,10 @@
         <option value="$PROJECT_DIR$/routes/verifyUser.js" />
         <option value="$PROJECT_DIR$/routes/login.js" />
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
         <option value="$PROJECT_DIR$/app.js" />
 >>>>>>> Stashed changes
         <option value="$PROJECT_DIR$/routes/mongoConnection.js" />
@@ -232,8 +251,11 @@
         </subPane>
       </pane>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       <pane id="Scope" />
       <pane id="Scratches" />
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
     </panes>
@@ -351,8 +373,12 @@
       <workItem from="1495660116243" duration="3699000" />
       <workItem from="1495671617448" duration="351000" />
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
       <workItem from="1495673557488" duration="19548000" />
       <workItem from="1495709718622" duration="415000" />
+=======
+      <workItem from="1495673557488" duration="22940000" />
+>>>>>>> Stashed changes
 =======
       <workItem from="1495673557488" duration="22940000" />
 >>>>>>> Stashed changes
@@ -361,7 +387,11 @@
   </component>
   <component name="TimeTrackingManager">
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     <option name="totallyTimeSpent" value="82492000" />
+=======
+    <option name="totallyTimeSpent" value="85469000" />
+>>>>>>> Stashed changes
 =======
     <option name="totallyTimeSpent" value="85469000" />
 >>>>>>> Stashed changes
@@ -821,8 +851,13 @@
     <entry file="file://$PROJECT_DIR$/routes/sendPosts.js">
       <provider selected="true" editor-type-id="text-editor">
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         <state relative-caret-position="1335">
           <caret line="89" column="16" lean-forward="false" selection-start-line="89" selection-start-column="16" selection-end-line="89" selection-end-column="16" />
+=======
+        <state relative-caret-position="507">
+          <caret line="77" column="33" selection-start-line="77" selection-start-column="33" selection-end-line="77" selection-end-column="33" />
+>>>>>>> Stashed changes
 =======
         <state relative-caret-position="507">
           <caret line="77" column="33" selection-start-line="77" selection-start-column="33" selection-end-line="77" selection-end-column="33" />
@@ -834,8 +869,13 @@
     <entry file="file://$PROJECT_DIR$/routes/register.js">
       <provider selected="true" editor-type-id="text-editor">
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         <state relative-caret-position="1155">
           <caret line="144" column="18" lean-forward="false" selection-start-line="144" selection-start-column="18" selection-end-line="144" selection-end-column="18" />
+=======
+        <state relative-caret-position="345">
+          <caret line="97" column="9" selection-start-line="97" selection-start-column="9" selection-end-line="97" selection-end-column="9" />
+>>>>>>> Stashed changes
 =======
         <state relative-caret-position="345">
           <caret line="97" column="9" selection-start-line="97" selection-start-column="9" selection-end-line="97" selection-end-column="9" />
@@ -847,6 +887,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
     <entry file="file://$PROJECT_DIR$/routes/friendList.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -874,6 +915,8 @@
         </state>
       </provider>
     </entry>
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
   </component>

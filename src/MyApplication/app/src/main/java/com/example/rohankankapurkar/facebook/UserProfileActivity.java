@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,7 +43,13 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -64,6 +71,10 @@ public class UserProfileActivity extends AppCompatActivity {
 
     private  UpdateProfile updateProfileDetails = null;
 
+    private ListView listView;
+    private FeedListAdapter listAdapter;
+    private List<FeedItem> feedItems;
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +86,19 @@ public class UserProfileActivity extends AppCompatActivity {
         updateProfile =(Button) findViewById(R.id.updateProfile);
         createTabs();
 
-        loadTextDetails();
+        listView = (ListView) findViewById(R.id.list);
+
+        feedItems = new ArrayList<FeedItem>();
+
+        listAdapter = new FeedListAdapter(this, feedItems);
+        listView.setAdapter(listAdapter);
+
+
+        try {
+            loadTextDetails();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.edit);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -240,8 +263,7 @@ public class UserProfileActivity extends AppCompatActivity {
         }
     }
 
-    private void loadTextDetails()
-    {
+    private void loadTextDetails() throws JSONException {
         String nameVal = getIntent().getStringExtra("firstname");
         String emailVal = getIntent().getStringExtra("email");
         String professionVal = getIntent().getStringExtra("profession");
@@ -249,6 +271,9 @@ public class UserProfileActivity extends AppCompatActivity {
         String addressVal = getIntent().getStringExtra("address");
         String aboutVal = getIntent().getStringExtra("aboutme");
         String isPrivate =  getIntent().getStringExtra("isPrivate");
+        String myTweets = getIntent().getStringExtra("myTweets");
+
+
         if(getIntent().getStringExtra("profilePic")!= null)
         {
             String profilePicture =getIntent().getStringExtra("profilePic");
@@ -265,12 +290,18 @@ public class UserProfileActivity extends AppCompatActivity {
          TextView userEmail = (TextView) findViewById(R.id.firstname);
         userEmail.setText(nameVal);
 
+
+        parseJsonFeed(new JSONArray(myTweets),emailVal,imagePath);
+
+
         name = (TextView) findViewById(R.id.userNameText);
         email = (TextView) findViewById(R.id.userEmailText);
         address = (TextView) findViewById(R.id.userAddressText);
         profession = (TextView) findViewById(R.id.userProfessionText);
         interest = (TextView) findViewById(R.id.userInterestsText);
         about = (TextView) findViewById(R.id.userAboutMeText);
+
+
 
 
         name.setText(nameVal);
@@ -432,6 +463,39 @@ public class UserProfileActivity extends AppCompatActivity {
         }
     }
 
+    private void parseJsonFeed(JSONArray response, String emailVal, String imagePath) {
+        try {
+
+
+            for (int i = 0; i < response.length(); i++) {
+                JSONObject feedObj = (JSONObject) response.get(i);
+
+                FeedItem item = new FeedItem();
+              //  item.setId(feedObj.getInt("id"));
+                item.setName(emailVal);
+
+                // Image might be null sometimes
+               /* String image = feedObj.isNull("image") ? null : feedObj
+                        .getString("image");
+                item.setImge(image);*/
+                item.setStatus(feedObj.getString("message"));
+                item.setProfilePic(imagePath);
+                item.setTimeStamp(feedObj.getString("time"));
+
+                // url might be null sometimes
+               /* String feedUrl = feedObj.isNull("url") ? null : feedObj
+                        .getString("url");
+                item.setUrl(feedUrl);*/
+
+                feedItems.add(item);
+            }
+
+            // notify data changes to list adapater
+            listAdapter.notifyDataSetChanged();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 

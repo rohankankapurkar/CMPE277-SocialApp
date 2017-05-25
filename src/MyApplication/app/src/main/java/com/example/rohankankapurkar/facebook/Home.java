@@ -166,7 +166,7 @@ public class Home extends AppCompatActivity
     public class UserProfile extends AsyncTask<Void, Void, Boolean> {
         public JSONObject userDetails;
 
-        String firstname, lastname, email, profilePic, address, profession, interests, aboutme, isPrivate;
+        String firstname, lastname, email, profilePic, address, profession, interests, aboutme, isPrivate,myTweets;
 
         @Override
         protected Boolean doInBackground(Void... params) {
@@ -211,6 +211,9 @@ public class Home extends AppCompatActivity
                                 }
                                 if (userDetails.has("interests")) {
                                     interests = userDetails.getString("interests");
+                                }
+                                if (userDetails.has("myTweets")) {
+                                    myTweets = userDetails.getString("myTweets");
                                 }
 
                                 isPrivate = userDetails.getString("isPrivate");
@@ -257,6 +260,12 @@ public class Home extends AppCompatActivity
 
                                         } else {
                                             userProfile.putExtra("aboutme", "Want to travel the whole world");
+                                        }
+                                        if (myTweets != null && !myTweets.isEmpty()) {
+                                            userProfile.putExtra("myTweets", myTweets);
+
+                                        } else {
+                                            userProfile.putExtra("myTweets", "");
                                         }
 
 

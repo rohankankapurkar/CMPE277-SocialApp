@@ -30,6 +30,7 @@ exports.connect = function(url, callback){
         connected = true;
         console.log(connected +" is connected?");
         callback(db);
+        db.close();
     });
 };
 

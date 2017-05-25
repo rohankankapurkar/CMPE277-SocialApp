@@ -97,7 +97,7 @@ public class CustomAdapter extends BaseAdapter{
             holder.followFriendButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    followFriend();
+                    followFriend(finalHolder.email.getText().toString());
                 }
             });
 
@@ -117,9 +117,9 @@ public class CustomAdapter extends BaseAdapter{
         ((FriendListActivity) mContext).sendFriendRequest(friend_req_sent_to);
     }
 
-    private void followFriend() {
+    private void followFriend(String friend_req_sent_to) {
         /******** Make API call for your followFriend logic *******/
         Log.v("NACHIKET", "=====INSIDE followFriend=====");
-        ((FriendListActivity) mContext).followFriend();
+        ((FriendListActivity) mContext).followFriend(friend_req_sent_to);
     }
 }

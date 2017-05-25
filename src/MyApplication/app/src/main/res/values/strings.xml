@@ -29,6 +29,9 @@
     <string name="search">Search Email</string>
     <string name="search_button">SEARCH</string>
     <string name="add_button">ADD</string>
+    <string name="friend_request_sent">Friend Request Sent</string>
+    <string name="already_friends">Already friends.</string>
+    <string name="accept_firend_requst">Accept firend requst</string>
 
     <!--Album-->
     <string name="album_name_hint">Album Title</string>

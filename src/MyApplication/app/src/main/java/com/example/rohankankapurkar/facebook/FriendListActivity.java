@@ -95,8 +95,8 @@ public class FriendListActivity extends AppCompatActivity {
         sendFriendRequest.execute((Void) null);
     }
 
-    public void followFriend() {
-        followFriend = new followFriendTask();
+    public void followFriend(String friend_req_sent_to) {
+        followFriend = new followFriendTask(friend_req_sent_to);
         followFriend.execute((Void) null);
     }
 
@@ -256,7 +256,7 @@ public class FriendListActivity extends AppCompatActivity {
                             Log.d("NACHIKET", response);
                             Log.d("NACHIEKT", response.toString());
 
-                            Toast.makeText(FriendListActivity.this, "POST CONNECTION ESTABLISHED", Toast.LENGTH_LONG).show();
+                            Toast.makeText(FriendListActivity.this, "!!!FRIEND REQUEST SENT!!!", Toast.LENGTH_LONG).show();
                         }
                     },
                     new Response.ErrorListener() {
@@ -283,7 +283,11 @@ public class FriendListActivity extends AppCompatActivity {
     //Following class takes care of following a friend without sending a request
 
     public class followFriendTask extends AsyncTask<Void, Void, Boolean> {
-
+        String friend_req_sent_to;
+        public followFriendTask(String friend_req_sent_to) {
+            super();
+            this.friend_req_sent_to = friend_req_sent_to;
+        }
         @Override
         protected Boolean doInBackground(Void... params) {
 
@@ -301,7 +305,7 @@ public class FriendListActivity extends AppCompatActivity {
                             Log.d("NACHIKET", response);
                             Log.d("NACHIEKT", response.toString());
 
-                            Toast.makeText(FriendListActivity.this, "POST CONNECTION ESTABLISHED", Toast.LENGTH_LONG).show();
+                            Toast.makeText(FriendListActivity.this, "!!!FOLLOW SUCCESSFUL!!!", Toast.LENGTH_LONG).show();
                         }
                     },
                     new Response.ErrorListener() {
@@ -316,6 +320,7 @@ public class FriendListActivity extends AppCompatActivity {
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();
                     params.put("email", username);
+                    params.put("friend_req_sent_to", friend_req_sent_to);
                     return params;
                 }
             };

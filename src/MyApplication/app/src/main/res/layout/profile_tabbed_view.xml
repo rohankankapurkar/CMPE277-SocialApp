@@ -17,7 +17,7 @@
 
 
         <TabHost
-            android:layout_width="200dip"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
             android:id="@+id/tabHost1"

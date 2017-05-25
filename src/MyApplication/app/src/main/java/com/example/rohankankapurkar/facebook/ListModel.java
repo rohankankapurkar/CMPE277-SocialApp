@@ -10,6 +10,7 @@ public class ListModel {
     private  String FriendFirstName;
     private  String FriendLastName;
     private  String FriendEmail;
+    private  int Status;
 
     public String getFriendFirstName() {
         return FriendFirstName;
@@ -30,7 +31,13 @@ public class ListModel {
     public String getFriendEmail() {
         return FriendEmail;
     }
+    public int getStatus() {
+        return Status;
+    }
 
+    public void setStatus(int status) {
+        Status = status;
+    }
     public void setFriendEmail(String friendEmail) {
         FriendEmail = friendEmail;
     }
@@ -39,6 +46,13 @@ public class ListModel {
         FriendFirstName = first;
         FriendLastName = last;
         FriendEmail = email;
+    }
+
+    ListModel(String first, String last, String email, int stat) {
+        FriendFirstName = first;
+        FriendLastName = last;
+        FriendEmail = email;
+        Status = stat;
     }
 
 }

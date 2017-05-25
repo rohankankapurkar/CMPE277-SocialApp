@@ -93,6 +93,22 @@ public class UserProfileActivity extends AppCompatActivity {
         listAdapter = new FeedListAdapter(this, feedItems);
         listView.setAdapter(listAdapter);
 
+        name = (TextView) findViewById(R.id.userNameText);
+        email = (TextView) findViewById(R.id.userEmailText);
+        address = (TextView) findViewById(R.id.userAddressText);
+        profession = (TextView) findViewById(R.id.userProfessionText);
+        interest = (TextView) findViewById(R.id.userInterestsText);
+        about = (TextView) findViewById(R.id.userAboutMeText);
+
+        newname = (EditText) findViewById(R.id.userName);
+        newemail = (EditText) findViewById(R.id.userEmail);
+        newaddress = (EditText) findViewById(R.id.userAddress);
+        newprofession = (EditText) findViewById(R.id.userProfession);
+        newinterest = (EditText) findViewById(R.id.userInterests);
+        newabout = (EditText) findViewById(R.id.userAboutMe);
+
+        cb = (CheckBox) findViewById(R.id.visibility);
+        cb.setVisibility(View.GONE);
 
         try {
             loadTextDetails();
@@ -143,18 +159,10 @@ public class UserProfileActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(this,
                     new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
                     123);
-
-
-
-
-
-
     }
 
     private void updateProfile()
     {
-
-
         updateProfileDetails =  new UserProfileActivity.UpdateProfile(newname.getText().toString(), newaddress.getText().toString(),newprofession.getText().toString(),newinterest.getText().toString(),newabout.getText().toString());
         updateProfileDetails.execute((Void) null);
 
@@ -273,36 +281,22 @@ public class UserProfileActivity extends AppCompatActivity {
         String isPrivate =  getIntent().getStringExtra("isPrivate");
         String myTweets = getIntent().getStringExtra("myTweets");
 
-
+        imagePath = "https://firebasestorage.googleapis.com/v0/b/myapplication-574b6.appspot.com/o/images%2Fprofileicon.png?alt=media&token=964a058b-6aef-4cdb-b1f0-b3307c3d4fc8";
         if(getIntent().getStringExtra("profilePic")!= null)
         {
             String profilePicture =getIntent().getStringExtra("profilePic");
             ImageView profileImg = (ImageView) findViewById(R.id.profileImage);
             Log.d("IMAGE IMAGE",Uri.parse(profilePicture).toString());
-            imagePath = profilePicture;
+            //*imagePath = profilePicture;
             Picasso.with(this)
                     .load(profilePicture)
                     .into(profileImg);
         }
-        else {
-            imagePath = "https://firebasestorage.googleapis.com/v0/b/myapplication-574b6.appspot.com/o/images%2Fprofileicon.png?alt=media&token=964a058b-6aef-4cdb-b1f0-b3307c3d4fc8";
-        }
-         TextView userEmail = (TextView) findViewById(R.id.firstname);
+        TextView userEmail = (TextView) findViewById(R.id.firstname);
         userEmail.setText(nameVal);
 
 
-        parseJsonFeed(new JSONArray(myTweets),emailVal,imagePath);
-
-
-        name = (TextView) findViewById(R.id.userNameText);
-        email = (TextView) findViewById(R.id.userEmailText);
-        address = (TextView) findViewById(R.id.userAddressText);
-        profession = (TextView) findViewById(R.id.userProfessionText);
-        interest = (TextView) findViewById(R.id.userInterestsText);
-        about = (TextView) findViewById(R.id.userAboutMeText);
-
-
-
+        //parseJsonFeed(new JSONArray(myTweets),emailVal,imagePath);
 
         name.setText(nameVal);
         email.setText(emailVal);
@@ -310,14 +304,6 @@ public class UserProfileActivity extends AppCompatActivity {
         profession.setText(professionVal);
         interest.setText(interestVal);
         about.setText(aboutVal);
-
-
-        newname = (EditText) findViewById(R.id.userName);
-        newemail = (EditText) findViewById(R.id.userEmail);
-        newaddress = (EditText) findViewById(R.id.userAddress);
-        newprofession = (EditText) findViewById(R.id.userProfession);
-        newinterest = (EditText) findViewById(R.id.userInterests);
-        newabout = (EditText) findViewById(R.id.userAboutMe);
 
         newname.setText(nameVal);
         newemail.setText(emailVal);
@@ -327,8 +313,7 @@ public class UserProfileActivity extends AppCompatActivity {
         newabout.setText(aboutVal);
 
 
-        cb = (CheckBox) findViewById(R.id.visibility);
-        cb.setChecked(Boolean.parseBoolean(isPrivate));
+        //cb.setChecked(Boolean.parseBoolean(isPrivate));
 
 
     }
@@ -454,9 +439,6 @@ public class UserProfileActivity extends AppCompatActivity {
                     Toast.makeText(UserProfileActivity.this, "Select an image", Toast.LENGTH_SHORT).show();
                 }
 
-
-
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -482,11 +464,6 @@ public class UserProfileActivity extends AppCompatActivity {
                 item.setProfilePic(imagePath);
                 item.setTimeStamp(feedObj.getString("time"));
 
-                // url might be null sometimes
-               /* String feedUrl = feedObj.isNull("url") ? null : feedObj
-                        .getString("url");
-                item.setUrl(feedUrl);*/
-
                 feedItems.add(item);
             }
 
@@ -496,7 +473,4 @@ public class UserProfileActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
-
-
 }

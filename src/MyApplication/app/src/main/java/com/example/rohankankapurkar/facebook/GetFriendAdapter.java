@@ -44,6 +44,10 @@ public class GetFriendAdapter extends BaseAdapter {
 
     class Holder {
         TextView Name;
+        TextView email;
+        TextView statusButton0;
+        TextView statusButton1;
+        TextView statusButton2;
     }
 
     @Override
@@ -55,11 +59,40 @@ public class GetFriendAdapter extends BaseAdapter {
             view = inflater.inflate(R.layout.friend_view,parent,false);
             holder = new GetFriendAdapter.Holder();
             holder.Name = (TextView) view.findViewById(R.id.friend_name_tv);
+            holder.email = (TextView) view.findViewById(R.id.friend_email_tv);
+            holder.statusButton0 = (TextView) view.findViewById(R.id.button_0);
+            holder.statusButton1 = (TextView) view.findViewById(R.id.button_1);
+            holder.statusButton2 = (TextView) view.findViewById(R.id.button_2);
             view.setTag(holder);
         } else {
             holder = (GetFriendAdapter.Holder) view.getTag();
         }
         holder.Name.setText(mList.get(position).getFriendFirstName()+" "+mList.get(position).getFriendLastName() );
+        holder.email.setText(mList.get(position).getFriendEmail());
+        holder.statusButton0.setVisibility(View.INVISIBLE);
+        holder.statusButton1.setVisibility(View.INVISIBLE);
+        holder.statusButton2.setVisibility(View.INVISIBLE);
+        switch ( mList.get(position).getStatus()) {
+            case 0:
+                holder.statusButton0.setVisibility(View.VISIBLE);
+                break;
+            case 1:
+                holder.statusButton1.setVisibility(View.VISIBLE);
+                break;
+            case 2:
+                holder.statusButton2.setVisibility(View.VISIBLE);
+                break;
+        }
         return view;
+    }
+
+    @Override
+    public boolean isEnabled(int position) {
+        switch ( mList.get(position).getStatus()) {
+            case 2:
+                return true;
+            default:
+                return false;
+        }
     }
 }

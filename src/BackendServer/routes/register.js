@@ -36,126 +36,16 @@ function register(req ,res){
 
     mongo.connect(mongoURL, function(err, db){
         var coll = mongo.collection('Facebook');
-
-
-        //adding here to restrict duplicate user
-console.log("printint email"+email);
-/*
-        coll.findOne({"email" : email}, function(err, user){
-            if (user) {
-                console.log(user.email);
-                //console.log("user"+ JSON.stringify(user));
-                console.log("Duplicate registration detected");
-
-                res.json({msg:"Duplicate"});
-            } else {
-
-                console.log("inside else");
-                var val = Math.floor(1000 + Math.random() * 9000);
-                console.log(val);
-                coll.insert({email : email, "password": password, "firstname" : firstname, "lastname" : lastname, "password_confirm": password_confirm, "verification" : val, "isPrivate" : "false"}, function(err, user){
-                    if (user) {
-                        //logic to send mail here
-                        var mailer = require("nodemailer");
-
-// Use Smtp Protocol to send Email
-                        var smtpTransport = nodemailer.createTransport({
-                            service: "gmail",
-                            host: "smtp.gmail.com",
-                            auth: {
-                                user: "cmpe277slash@gmail.com",
-                                pass: "rohankankapurkar"
-                            }
-                        });
-
-
-                        var mailOptions={
-                            to : email,
-                            subject : 'Here is your authentication code from CMPE 277 project',
-                            text : val+"  Enter this code in the application "
-                        }
-                        console.log(mailOptions);
-                        smtpTransport.sendMail(mailOptions, function(error, response){
-                            if(error){
-                                console.log(error);
-                                res.end("error");
-                            }else{
-                                console.log("Message sent: " + response.message);
-                                res.end("sent");
-                            }
-                        });
-
-
-
-
-
-
-
-
-                        console.log("User added successfully");
-
-                        res.json({msg: val});
-                    } else {
-                        console.log("returned false");
-                        res.code = 401;
-                        res.value = "Failed Login";
-                    }
-                });
-                console.log("succesfully sent mail");
-
-
-
-            }
-        });
-*/
-
-
-        var mailer = require("nodemailer");
-
-// Use Smtp Protocol to send Email
-        var smtpTransport = nodemailer.createTransport({
-            service: "gmail",
-            host: "smtp.gmail.com",
-            auth: {
-                user: "cmpe277slash@gmail.com",
-                pass: "rohankankapurkar"
-            }
-        });
-
-
-        var mailOptions = {
-            to: email,
-            subject: 'Here is your authentication code from CMPE 277 project',
-            text: val + "  Enter this code in the application "
-        }
-        console.log(mailOptions);
-        smtpTransport.sendMail(mailOptions, function (error, response) {
-            if (error) {
-                console.log(error);
-                //res.end("error");
-            } else {
-                console.log("Message sent: " + response.message);
-                //res.end("sent");
-            }
-        });
-
-
         coll.findOne({"email" : email}, function(err, person) {
-            if (person) {
-                //res.json({msg:"Duplicate"});
-                return;
-            }else if(err){
-                console.log("Error in finding user");
-            }else{
-
-            }
-
-
-        });
-
-
+        if (person) {
+            found = true;
+            res.json({msg: "Duplicate"});
+            return;
+        }else if(err){
+            console.log("Error in finding user");
+        }else {
             coll.insert({
-                email: email,
+                "email": email,
                 "password": password,
                 "firstname": firstname,
                 "lastname": lastname,
@@ -167,17 +57,56 @@ console.log("printint email"+email);
 
                     console.log("User added successfully");
 
+                    var mailer = require("nodemailer");
+
+// Use Smtp Protocol to send Email
+                    var smtpTransport = nodemailer.createTransport({
+                        service: "gmail",
+                        host: "smtp.gmail.com",
+                        auth: {
+                            user: "cmpe277slash@gmail.com",
+                            pass: "rohankankapurkar"
+                        }
+                    });
+
+
+                    var mailOptions = {
+                        to: email,
+                        subject: 'Here is your authentication code from CMPE 277 project',
+                        text: val + "  Enter this code in the application "
+                    }
+                    console.log(mailOptions);
+                    smtpTransport.sendMail(mailOptions, function (error, response) {
+                        if (error) {
+                            console.log(error);
+                            //res.end("error");
+                        } else {
+                            console.log("Message sent: " + response.message);
+                            //res.end("sent");
+                        }
+                    });
+
+
                     res.json({msg: val});
                 } else {
                     console.log("returned false");
                     //res.code = 401;
                     //res.value = "Failed Login";
                 }
+
             });
+        }
+
+        });
+
 
 
     });
+
+
+
 }
+
 exports.register = register;
 
 

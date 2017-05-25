@@ -122,8 +122,8 @@ public class RegisterActivity extends AppCompatActivity {
                                 toast.show();
                                 Log.d("slayer", "onResponse: slater ");
                             }else {
-                                Toast toast = Toast.makeText(context, text, duration);
-                                toast.show();
+//                                Toast toast = Toast.makeText(context, text, duration);
+//                                toast.show();
                                 Intent confirmMailIntent = new Intent(RegisterActivity.this, ConfirmMailActivity.class);
                                 String send_email = register_email.getText().toString();
                                 confirmMailIntent.putExtra("email", send_email);

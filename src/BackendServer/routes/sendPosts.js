@@ -64,7 +64,7 @@ function sendPosts(req ,res){
 
             var myFriends = [];
             function findUsers(){
-                console.log("*****LAst here****");
+                console.log("*****Last here****");
             }
 
             function sendMail(){
@@ -77,13 +77,13 @@ function sendPosts(req ,res){
             }
             function sendMail2(){
                 console.log("******Second callback*****");
-                console.log("Printint all my friends"+myFriends[2]);
+                console.log("Printint all my friends"+myFriends);
                 var coll = mongo.collection('Facebook');
 
-                coll.updateMany({"email" : {$in : myFriends}}, { $push: { "myHomeTweetstest":{"message":message,"time":d } } }, {upsert:true},function(err, user){
+                coll.updateMany({"email" : {$in : myFriends}}, { $push: { "myHomeTweets":{"message":message,"time":d } } }, {upsert:true},function(err, user){
                     if (user) {
                         console.log("Sent tweet to mongo successfully");
-                        //res.json({msg:"Done"});
+                        console.log("******Wasnt that sexy piece of code******");
                     } else {
                         //send mail if tries to register
                         console.log("Error while sending");

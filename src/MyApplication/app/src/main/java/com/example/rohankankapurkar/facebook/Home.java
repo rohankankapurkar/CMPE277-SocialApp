@@ -28,6 +28,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.rohankankapurkar.facebook.Album.ViewAlbumsPage;
+import com.example.rohankankapurkar.facebook.Settings.Viewsettings;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -106,6 +107,13 @@ public class Home extends AppCompatActivity
             Home.this.startActivity(logout);
 
             return true;
+        }
+        else if(id==R.id.settings){
+            Intent settingsIntent=new Intent(Home.this, Viewsettings.class);
+            String username = getIntent().getExtras().getString("email");
+            settingsIntent.putExtra("userName", username);
+            Home.this.startActivity(settingsIntent);
+            finish();
         }
 
         return super.onOptionsItemSelected(item);

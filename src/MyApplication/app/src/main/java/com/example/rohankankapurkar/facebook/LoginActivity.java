@@ -42,6 +42,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -378,6 +379,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                  res = new JSONObject(response);
                                 if(res.getInt("status")== 200 )
                                 {
+                                    //saving instance tokens to firebase
+                                    String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+                                    Log.d("keke", "Refreshed token: " + refreshedToken);
+
+
                                     Intent intent = new Intent(LoginActivity.this, Home.class);
                                     intent.putExtra("email", mEmailView.getText().toString());
                                     startActivity(intent);

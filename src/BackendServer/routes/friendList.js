@@ -3,6 +3,7 @@
  */
 
 var mongo = require("./mongoConnection");
+var sendNotification = require('./SendNotification');
 var mongoURL = "mongodb://rohan:rohan@cluster0-shard-00-00-v6jmi.mongodb.net:27017,cluster0-shard-00-01-v6jmi.mongodb.net:27017,cluster0-shard-00-02-v6jmi.mongodb.net:27017/CMPE277?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin"
 
 function discoverFriends(req, res) {
@@ -77,8 +78,10 @@ function sendFriendRequest(req, res) {
 
 	var email = req.body.email;
 	var friend_req_sent_to = req.body.friend_req_sent_to;
+	var friend_token=req.body.friend_token;
 	console.log("email: " + email);
 	console.log("friend_req_sent_to: " + friend_req_sent_to);
+	console.log("push notification to:"+friend_token);
 
 	mongo.connect(mongoURL, function(err, db) {
 		var collection_facebook = mongo.collection('Facebook');
@@ -124,6 +127,7 @@ function sendFriendRequest(req, res) {
 						}
 					);
 			}
+
 		});
 
 		//console.log("HELLO");
@@ -160,6 +164,29 @@ function sendFriendRequest(req, res) {
 					        }
 					    }, function(err, user) {
 							if (user) {
+								
+								/**
+						* Sending notification here start
+						*/
+						var message = { //this may vary according to the message type (single recipient, multicast, topic, et cetera) 
+							to: friend_token, 							
+							notification: {
+								title: 'New Friend Request', 
+								body: 'You have recieved a new friend request' 
+							},
+							
+							/*data: {  //you can send only notification or only data(or include both) 
+								my_key: 'my value',
+								my_another_key: 'my another value'
+							}*/
+						};
+						
+						//to: 'fssT0H5ouJE:APA91bF3xy7cOFr7dmoLaTqHlbMd2aaKQ8y3RbuJ2mzeAZvAAR1UKZgOUm4I_LmEfcqBXb3sYZ5YjIjDvSdtn_6B3f0fMO7wFAylWURLGpKFXg3tSuN0vE3GxVjpgW2349SV2BDPYDkw'
+						
+						sendNotification.sendMessage(message);
+						//--------------------------------------------
+						
+								
 								console.log("SENDING FRIEND REQUEST SUCCESSFUL");
 								res.code = 200;
 							} else {

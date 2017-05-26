@@ -79,7 +79,7 @@ public class ViewSelectedAlbumPage extends AppCompatActivity {
 
     }
 
-    public void setGridView(ArrayList<String> urlArray) {
+    public void setGridView(final ArrayList<String> urlArray) {
         gridview = (GridView) findViewById(R.id.gridview);
         Log.i("keke", "imgUrlList: " + urlArray);
         ImageAdapter imgAdapter = new ImageAdapter(getApplicationContext(), urlArray);
@@ -88,8 +88,15 @@ public class ViewSelectedAlbumPage extends AppCompatActivity {
         Log.i("keke", "getCount: " + imgAdapter.getCount());
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Toast.makeText(getApplicationContext(), "test",
-                        Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(getApplicationContext(), "test",Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(ViewSelectedAlbumPage.this,ViewSelectedImage.class);
+                intent.putExtra("albumName", albumName);
+                intent.putExtra("userName",getUserName());
+                intent.putExtra("url",urlArray.get(position));
+//                                    intent.putExtra("imgURL",downloadUrl.toString());
+                startActivity(intent);
+
             }
         });
     }

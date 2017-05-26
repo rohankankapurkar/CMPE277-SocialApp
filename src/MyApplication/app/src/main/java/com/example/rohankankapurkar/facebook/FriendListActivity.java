@@ -17,6 +17,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,6 +46,8 @@ public class FriendListActivity extends AppCompatActivity {
     private EditText searchEmail;
 
     String api_url = "http://10.0.2.2:3000";
+    RequestQueue queue;
+    String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,17 +112,19 @@ public class FriendListActivity extends AppCompatActivity {
     public class searchFriendsTask extends AsyncTask<Void, Void, Boolean> {
 
         String searchParam;
+
         public searchFriendsTask(String searchParam) {
             super();
             this.searchParam = searchParam;
             // do stuff
         }
+
         @Override
         protected Boolean doInBackground(Void... params) {
 
             Log.d("NACHIKET", "inside function searchFriendsTask ASYNC task: ");
             Context context = getApplicationContext();
-            RequestQueue queue = Volley.newRequestQueue(context);
+            queue = Volley.newRequestQueue(context);
             String url = api_url + "/getSearchFriendList";
 
             final String username = getIntent().getExtras().getString("email");
@@ -179,7 +188,7 @@ public class FriendListActivity extends AppCompatActivity {
             Context context = getApplicationContext();
             RequestQueue queue = Volley.newRequestQueue(context);
             final String username = getIntent().getExtras().getString("email");
-            String url = api_url + "/discoverFriends";
+            url = api_url + "/discoverFriends";
 
 
             StringRequest getRequest = new StringRequest(Request.Method.POST, url,
@@ -214,7 +223,7 @@ public class FriendListActivity extends AppCompatActivity {
                             Log.d("Error.Response", error.toString());
                         }
                     }
-            ){
+            ) {
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();
@@ -231,51 +240,78 @@ public class FriendListActivity extends AppCompatActivity {
     public class sendFriendRequestTask extends AsyncTask<Void, Void, Boolean> {
 
         String friend_req_sent_to;
+        String friendToken;
+
         public sendFriendRequestTask(String friend_req_sent_to) {
             super();
             this.friend_req_sent_to = friend_req_sent_to;
             // do stuff
         }
+
         @Override
         protected Boolean doInBackground(Void... params) {
 
+
             Log.d("NACHIKET", "inside function sendFriendRequestTask ASYNC task: ");
             Context context = getApplicationContext();
-            RequestQueue queue = Volley.newRequestQueue(context);
 
-            String url = api_url + "/sendFriendRequest";
+            queue = Volley.newRequestQueue(context);
 
-            final String username = getIntent().getExtras().getString("email");
-            Log.d("NACHIKET", "SESSION BELONGS TO: " + username);
-
-            StringRequest postRequest = new StringRequest(Request.Method.POST, url,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            // response
-                            Log.d("NACHIKET", response);
-                            Log.d("NACHIEKT", response.toString());
-
-                            Toast.makeText(FriendListActivity.this, "!!!FRIEND REQUEST SENT!!!", Toast.LENGTH_LONG).show();
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            // error
-                            Log.d("Error.Response", error.toString());
-                        }
-                    }
-            ) {
+            url = api_url + "/sendFriendRequest";
+            String uName = friend_req_sent_to;
+            Log.i("keke", "push sent to: " + friend_req_sent_to);
+            uName = uName.replace('.', '!');
+            Log.i("keke", "replaced: " + uName);
+            //Notification start//
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            String path = uName+"/users" + "/" + uName + "/firebaseToken";
+            DatabaseReference myRef = database.getReference().child(path);
+            myRef.addValueEventListener(new ValueEventListener() {
                 @Override
-                protected Map<String, String> getParams() {
-                    Map<String, String> params = new HashMap<String, String>();
-                    params.put("email", username);
-                    params.put("friend_req_sent_to", friend_req_sent_to);
-                    return params;
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    Log.i("keke", "value: " + dataSnapshot.getValue());
+                    friendToken = dataSnapshot.getValue().toString();
+                    final String username = getIntent().getExtras().getString("email");
+                    Log.d("NACHIKET", "SESSION BELONGS TO: " + username);
+                    StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    // response
+                                    Log.d("NACHIKET", response);
+                                    Log.d("NACHIEKT", response.toString());
+
+                                    Toast.makeText(FriendListActivity.this, "POST CONNECTION ESTABLISHED", Toast.LENGTH_LONG).show();
+                                }
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    // error
+                                    Log.d("Error.Response", error.toString());
+                                }
+                            }
+                    ) {
+                        @Override
+                        protected Map<String, String> getParams() {
+                            Map<String, String> params = new HashMap<String, String>();
+                            params.put("email", username);
+                            params.put("friend_req_sent_to", friend_req_sent_to);
+                            params.put("friend_token", friendToken);
+                            return params;
+                        }
+                    };
+                    queue.add(postRequest);
                 }
-            };
-            queue.add(postRequest);
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+
             return true;
         }
     }
@@ -284,10 +320,12 @@ public class FriendListActivity extends AppCompatActivity {
 
     public class followFriendTask extends AsyncTask<Void, Void, Boolean> {
         String friend_req_sent_to;
+
         public followFriendTask(String friend_req_sent_to) {
             super();
             this.friend_req_sent_to = friend_req_sent_to;
         }
+
         @Override
         protected Boolean doInBackground(Void... params) {
 
@@ -315,7 +353,7 @@ public class FriendListActivity extends AppCompatActivity {
                             Log.d("Error.Response", error.toString());
                         }
                     }
-            ){
+            ) {
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();

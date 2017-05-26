@@ -10,16 +10,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <service android:name=".MyFirebaseInstanceIDService">
-        <intent-filter>
-            <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
-        </intent-filter>
-    </service>
-    <service android:name=".MyFirebaseMessagingService">
-        <intent-filter>
-            <action android:name="com.google.firebase.MESSAGING_EVENT" />
-        </intent-filter>
-    </service>
+
+
 
     <application
         android:allowBackup="true"
@@ -51,14 +43,28 @@
             android:label="@string/title_activity_user_profile"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".FriendListActivity" />
-        <activity android:name=".ShowFriendActivity"></activity>
-        <activity android:name=".Album.ViewAlbumsPage"></activity>
-        <activity android:name=".Album.AddAlbumDelatils"></activity>
-        <activity android:name=".Album.PreviewSelectedImage"></activity>
-        <activity android:name=".Album.ViewSelectedAlbumPage"></activity>
+        <activity android:name=".ShowFriendActivity" />
+        <activity android:name=".Album.ViewAlbumsPage" />
+        <activity android:name=".Album.AddAlbumDelatils" />
+        <activity android:name=".Album.PreviewSelectedImage" />
+        <activity android:name=".Album.ViewSelectedAlbumPage" />
         <activity android:name=".Settings.Viewsettings" />
         <activity android:name=".Settings.PrivacySettings" />
         <activity android:name=".Settings.NotificationSettings" />
+        <activity android:name=".Album.ViewSelectedImage"></activity>
+
+        <service android:name=".MyNotificationService" android:enabled="true" android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <service android:name=".Notification.PushNotification">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>

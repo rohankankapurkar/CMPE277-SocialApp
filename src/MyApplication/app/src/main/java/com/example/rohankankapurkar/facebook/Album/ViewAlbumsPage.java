@@ -90,6 +90,7 @@ public class ViewAlbumsPage extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+                Log.i("keke", "onCancelled: "+databaseError);
             }
         });
     }

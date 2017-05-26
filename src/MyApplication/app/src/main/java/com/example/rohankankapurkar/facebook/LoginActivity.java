@@ -42,6 +42,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONException;
@@ -382,6 +384,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                     //saving instance tokens to firebase
                                     String refreshedToken = FirebaseInstanceId.getInstance().getToken();
                                     Log.d("keke", "Refreshed token: " + refreshedToken);
+                                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                    DatabaseReference myRef = database.getReference();
+
+                                    String username = mEmailView.getText().toString();
+                                    username=username.replace('.','!');
+
+                                    DatabaseReference refForSelectedAlbum = myRef.child( username+ "/users/" +username + "/firebaseToken");
+                                    refForSelectedAlbum.setValue(refreshedToken);
+                                    Log.i("keke", "token pushed to db!");
+
 
 
                                     Intent intent = new Intent(LoginActivity.this, Home.class);
